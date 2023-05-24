@@ -28,14 +28,21 @@ public class Plan {
     
     @OneToMany(mappedBy = "plan")
     private Set<Turno> turnos;
+    
+    @OneToMany( mappedBy = "plan" )
+    private Set<Paciente_ObraSocial> pacientes;
 
     public Plan() {
     }
 
-    public Plan(Long id, String nombre, ObraSocial obraSocial) {
+    public Plan(Long id, String nombre, ObraSocial obraSocial, Set<Turno> turnos, Set<Paciente_ObraSocial> pacientes) {
         this.id = id;
         this.nombre = nombre;
         this.obraSocial = obraSocial;
+        this.turnos = turnos;
+        this.pacientes = pacientes;
     }
+
+
     
 }

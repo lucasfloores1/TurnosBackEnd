@@ -1,5 +1,6 @@
 package com.turnos.turnos.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,7 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,8 +23,9 @@ public class Turno {
     @GeneratedValue ( strategy = GenerationType.AUTO )
     private Long id ;
     
-    @Column( name = "fecha", nullable = false )
-    private LocalDate fecha;
+    @Column( name = "fecha" )
+    @JsonFormat ( pattern = "yyyy-MM-dd" )
+    private LocalDateTime fecha;
     
     @Column( name = "confirmado" )
     private boolean confirmado;
@@ -57,7 +60,7 @@ public class Turno {
     public Turno() {
     }
 
-    public Turno(Long id, LocalDate fecha, boolean confirmado, boolean cargado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio) {
+    public Turno(Long id, LocalDateTime fecha, LocalTime hora, boolean confirmado, boolean cargado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio) {
         this.id = id;
         this.fecha = fecha;
         this.confirmado = confirmado;

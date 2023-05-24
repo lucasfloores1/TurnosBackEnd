@@ -22,7 +22,7 @@ public class Paciente extends Persona {
     private Long id ;
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "paciente" )
-    private Set<Paciente_ObraSocial> pacienteObraSocial = new HashSet<>();
+    private Set<Paciente_ObraSocial> obrasSociales = new HashSet<>();
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "paciente" )
     private Set<Turno> turnos = new HashSet<>();

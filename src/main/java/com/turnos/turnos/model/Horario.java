@@ -14,7 +14,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Medico_Instituto_Horario {
+public class Horario {
     
     @Id
     @GeneratedValue ( strategy = GenerationType.AUTO )

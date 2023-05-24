@@ -1,7 +1,7 @@
 package com.turnos.turnos.controller;
 
-import com.turnos.turnos.model.ObraSocial;
-import com.turnos.turnos.service.impl.ObraSocialServiceImpl;
+import com.turnos.turnos.model.Instituto;
+import com.turnos.turnos.service.impl.InstitutoServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,26 +18,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin( origins = "http://localhost:4200/" )
-public class ObraSocialController {
+public class InstitutoController {
     
     @Autowired
-    private ObraSocialServiceImpl obraSocialService;
+    private InstitutoServiceImpl institutoService;
     
-    @GetMapping( "/obraSocial/load" )
+    @GetMapping( "/instituto/load" )
     @ResponseBody
-    public List<ObraSocial> loadObraSocial(){
-        return obraSocialService.getObraSocials();
+    public List<Instituto> loadInstituto(){
+        return institutoService.getInstitutos();
     }
     
-    @PostMapping( "/obraSocial/create" )
-    public ResponseEntity<ObraSocial> createObraSocial( @RequestBody ObraSocial obraSocial ) {
-        ResponseEntity<ObraSocial> response;
+    @PostMapping( "/instituto/create" )
+    public ResponseEntity<Instituto> createInstituto( @RequestBody Instituto instituto ) {
+        ResponseEntity<Instituto> response;
         
-        ObraSocial createdObraSocial = obraSocialService.createObraSocial(obraSocial).getBody();
+        Instituto createdInstituto = institutoService.createInstituto(instituto).getBody();
         
-        if ( createdObraSocial != null ){
+        if ( createdInstituto != null ){
             
-        response = ResponseEntity.ok(createdObraSocial);
+        response = ResponseEntity.ok(createdInstituto);
             
         }else {
             
@@ -47,15 +47,15 @@ public class ObraSocialController {
         return response;
     }  
     
-    @DeleteMapping( "/obraSocial/delete/{id}" )
-    public void deleteObraSocial( @PathVariable Long id ){
-        obraSocialService.deleteObraSocial(id);
+    @DeleteMapping( "/instituto/delete/{id}" )
+    public void deleteInstituto( @PathVariable Long id ){
+        institutoService.deleteInstituto(id);
     }
     
-    @PutMapping( "/obraSocial/update/{id}" )
-    public ResponseEntity<ObraSocial> updateObraSocial( @PathVariable Long id, @RequestBody ObraSocial toUpdateObraSocial ){
+    @PutMapping( "/instituto/update/{id}" )
+    public ResponseEntity<Instituto> updateInstituto( @PathVariable Long id, @RequestBody Instituto toUpdateInstituto ){
         
-        return obraSocialService.updateObraSocial(id, toUpdateObraSocial);
+        return institutoService.updateInstituto(id, toUpdateInstituto);
     
     };
     
