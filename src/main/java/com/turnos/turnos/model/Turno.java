@@ -8,7 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import java.util.Date;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +22,7 @@ public class Turno {
     private Long id ;
     
     @Column( name = "fecha", nullable = false )
-    private Date fecha;
+    private LocalDate fecha;
     
     @Column( name = "confirmado" )
     private boolean confirmado;
@@ -57,7 +57,7 @@ public class Turno {
     public Turno() {
     }
 
-    public Turno(Long id, Date fecha, boolean confirmado, boolean cargado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio) {
+    public Turno(Long id, LocalDate fecha, boolean confirmado, boolean cargado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio) {
         this.id = id;
         this.fecha = fecha;
         this.confirmado = confirmado;

@@ -2,8 +2,12 @@ package com.turnos.turnos.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Getter;
+import lombok.Setter;
 
 @MappedSuperclass
+@Getter
+@Setter
 public abstract class Persona {
     
     @Column ( name = "nombre" , length = 50, nullable = false )
