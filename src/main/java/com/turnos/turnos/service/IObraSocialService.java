@@ -9,6 +9,8 @@ public interface IObraSocialService {
     
     public List<ObraSocial> getObraSocials();
     
+    public ObraSocial getObraSocialById(Long id);
+    
     public ResponseEntity<ObraSocial> createObraSocial(ObraSocial obraSocial);
     
     public void deleteObraSocial(Long id);

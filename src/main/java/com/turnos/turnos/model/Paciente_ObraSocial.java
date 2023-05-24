@@ -27,15 +27,19 @@ public class Paciente_ObraSocial {
     
     @ManyToOne( fetch = FetchType.EAGER )
     private ObraSocial obraSocial;
+    
+    @ManyToOne( fetch = FetchType.EAGER )
+    private Plan plan;
 
     public Paciente_ObraSocial() {
     }
 
-    public Paciente_ObraSocial(Long id, String afiliado, Paciente paciente, ObraSocial obraSocial) {
+    public Paciente_ObraSocial(Long id, String afiliado, Paciente paciente, ObraSocial obraSocial, Plan plan) {
         this.id = id;
         this.afiliado = afiliado;
         this.paciente = paciente;
         this.obraSocial = obraSocial;
+        this.plan = plan;
     }
     
 }

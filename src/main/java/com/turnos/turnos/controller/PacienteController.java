@@ -1,8 +1,16 @@
 
 package com.turnos.turnos.controller;
 
+import com.turnos.turnos.DTO.NuevoPacienteDTO;
+import com.turnos.turnos.model.ObraSocial;
 import com.turnos.turnos.model.Paciente;
+import com.turnos.turnos.model.Paciente_ObraSocial;
+import com.turnos.turnos.model.Plan;
+import com.turnos.turnos.service.impl.ObraSocialServiceImpl;
 import com.turnos.turnos.service.impl.PacienteServiceImpl;
+import com.turnos.turnos.service.impl.PlanServiceImpl;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +31,8 @@ public class PacienteController {
     
     @Autowired
     private PacienteServiceImpl pacienteService;
+    private ObraSocialServiceImpl obraSocialService;
+    private PlanServiceImpl planService;
     
     @GetMapping( "/paciente/load" )
     @ResponseBody
@@ -31,21 +41,36 @@ public class PacienteController {
     }
     
     @PostMapping( "/paciente/create" )
-    public ResponseEntity<Paciente> createPaciente( @RequestBody Paciente paciente ) {
-        ResponseEntity<Paciente> response;
+    public ResponseEntity<?> createPaciente( @RequestBody NuevoPacienteDTO pacientedto ) {
         
-        Paciente createdPaciente = pacienteService.createPaciente(paciente).getBody();
+        //Establezco la obra social
+        ObraSocial obraSocial = obraSocialService.getObraSocialById(pacientedto.getIdObraSocial());
         
-        if ( createdPaciente != null ){
-            
-        response = ResponseEntity.ok(createdPaciente);
-            
-        }else {
-            
-            response = ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
-            
-        }
-        return response;
+        //Establezco el plan
+        Plan plan = planService.getPlanById(pacientedto.getIdPlan());
+        
+        //Creo el paciente
+        Paciente createdPaciente = new Paciente();
+        
+        createdPaciente.setNombre(pacientedto.getNombre());
+        createdPaciente.setDni(pacientedto.getDni());
+        createdPaciente.setMail(pacientedto.getMail());
+        createdPaciente.setDireccion(pacientedto.getDireccion());
+        
+        //Nueva Instancia de la relacion
+        Paciente_ObraSocial paciente_ObraSocial = new Paciente_ObraSocial();
+        paciente_ObraSocial.setPaciente(createdPaciente);
+        paciente_ObraSocial.setObraSocial(obraSocial);
+        paciente_ObraSocial.setPlan(plan);
+        paciente_ObraSocial.setAfiliado(pacientedto.getAfiliado());
+        
+        //Relaciono paciente con la obra social
+        createdPaciente.setObrasSociales( new HashSet<>( Collections.singletonList( paciente_ObraSocial ) ) );
+        
+        //Llama al servicio que guarda al paciente en la base de datos
+        pacienteService.createPaciente(createdPaciente, paciente_ObraSocial);
+
+        return ResponseEntity.ok( createdPaciente );
     }  
     
     @DeleteMapping( "/paciente/delete/{id}" )

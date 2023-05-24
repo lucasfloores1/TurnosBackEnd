@@ -50,5 +50,10 @@ public class ObraSocialServiceImpl implements IObraSocialService {
         return ResponseEntity.ok(updatedObraSocial);
         
     }
+
+    @Override
+    public ObraSocial getObraSocialById(Long id) {
+        return obraSocialRepository.findById(id).orElse(null);
+    }
     
 }

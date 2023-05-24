@@ -1,7 +1,9 @@
 package com.turnos.turnos.service.impl;
 
 import com.turnos.turnos.model.Paciente;
+import com.turnos.turnos.model.Paciente_ObraSocial;
 import com.turnos.turnos.repository.PacienteRepository;
+import com.turnos.turnos.repository.Paciente_ObraSocialRepository;
 import com.turnos.turnos.service.IPacienteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class PacienteServiceImpl implements IPacienteService {
     @Autowired
     public PacienteRepository pacienteRepository;
     
+    @Autowired
+    public Paciente_ObraSocialRepository paciente_obraSocialRepository;
+    
     @Override
     public List<Paciente> getPacientes() {
         
@@ -23,11 +28,10 @@ public class PacienteServiceImpl implements IPacienteService {
     }
 
     @Override
-    public ResponseEntity<Paciente> createPaciente(Paciente paciente) {
+    public void createPaciente(Paciente paciente, Paciente_ObraSocial paciente_obraSocial) {
         
-        Paciente createdPaciente = pacienteRepository.save(paciente);
-        
-        return ResponseEntity.ok(createdPaciente);
+        pacienteRepository.save( paciente );
+        paciente_obraSocialRepository.save( paciente_obraSocial );
         
     }
 
@@ -51,6 +55,13 @@ public class PacienteServiceImpl implements IPacienteService {
         Paciente updatedPaciente = pacienteRepository.save(paciente);
         
         return ResponseEntity.ok(updatedPaciente);
+        
+    }
+
+    @Override
+    public Paciente getPacienteById(Long id) {
+        
+        return pacienteRepository.findById(id).orElse(null);
         
     }
     
