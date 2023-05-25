@@ -13,4 +13,6 @@ public interface IHorarioService {
     
     public void createHorario(Horario horario);
     
+    public List<Horario> getHorariosByMedicoInstituto(Long id);
+    
 }

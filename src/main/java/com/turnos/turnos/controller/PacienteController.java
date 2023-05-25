@@ -31,7 +31,9 @@ public class PacienteController {
     
     @Autowired
     private PacienteServiceImpl pacienteService;
+    @Autowired
     private ObraSocialServiceImpl obraSocialService;
+    @Autowired
     private PlanServiceImpl planService;
     
     @GetMapping( "/paciente/load" )

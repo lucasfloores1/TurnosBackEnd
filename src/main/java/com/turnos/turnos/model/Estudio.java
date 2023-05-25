@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Estudio {
     
     @Id
-    @GeneratedValue ( strategy = GenerationType.AUTO )
+    @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id ;
     
     @Column ( name = "nombre", length = 100, nullable = false )

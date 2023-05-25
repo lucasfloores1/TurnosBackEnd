@@ -29,6 +29,13 @@ public class InstitutoController {
         return institutoService.getInstitutos();
     }
     
+    @GetMapping( "/instituto/load/{id}" )
+    @ResponseBody
+    public ResponseEntity<Instituto> loadInstituto(@PathVariable Long id){
+        Instituto instituto = institutoService.getInstitutoById(id);
+        return ResponseEntity.ok(instituto);
+    }
+    
     @PostMapping( "/instituto/create" )
     public ResponseEntity<Instituto> createInstituto( @RequestBody Instituto instituto ) {
         ResponseEntity<Instituto> response;

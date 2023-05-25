@@ -1,5 +1,6 @@
 package com.turnos.turnos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import lombok.Setter;
 public class Plan {
     
     @Id
-    @GeneratedValue( strategy = GenerationType.AUTO )
+    @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long id;
     
     @Column ( name = "nombre", length = 50, nullable = false )
@@ -27,9 +28,11 @@ public class Plan {
     private ObraSocial obraSocial;
     
     @OneToMany(mappedBy = "plan")
+    @JsonIgnore
     private Set<Turno> turnos;
     
     @OneToMany( mappedBy = "plan" )
+    @JsonIgnore
     private Set<Paciente_ObraSocial> pacientes;
 
     public Plan() {

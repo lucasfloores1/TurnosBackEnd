@@ -1,5 +1,6 @@
 package com.turnos.turnos.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,19 +18,21 @@ import lombok.Setter;
 public class Horario {
     
     @Id
-    @GeneratedValue ( strategy = GenerationType.AUTO )
+    @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id;
     
     @Column ( name = "dia", nullable = false )
     private int dia;
     
+    @JsonFormat(pattern = "HH:mm:ss")
     @Column ( name = "inicio", nullable = false )
     private LocalTime inicio;
     
+    @JsonFormat(pattern = "HH:mm:ss")
     @Column ( name = "fin", nullable = false )
     private LocalTime fin;
     
     @ManyToOne ( fetch = FetchType.EAGER )
-    private Medico_Instituto medico_instituto;
+    private Medico_Instituto medicoInstituto;
     
 }

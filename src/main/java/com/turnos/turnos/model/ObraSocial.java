@@ -1,5 +1,6 @@
 package com.turnos.turnos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,7 +20,7 @@ import lombok.Setter;
 public class ObraSocial {
     
     @Id
-    @GeneratedValue ( strategy = GenerationType.AUTO )
+    @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id ;
     
     @Column ( name = "nombre", length = 50, nullable = false )
@@ -29,12 +30,15 @@ public class ObraSocial {
     private String direccion;
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obraSocial" )
+    @JsonIgnore
     private Set<Paciente_ObraSocial> pacienteObraSocial = new HashSet<>();
     
     @OneToMany ( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obraSocial" )
+    @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
     
     @OneToMany ( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obraSocial"  )
+    @JsonIgnore
     private Set<Plan> planes = new HashSet<>();
 
     public ObraSocial(Long id, String nombre, String direccion) {

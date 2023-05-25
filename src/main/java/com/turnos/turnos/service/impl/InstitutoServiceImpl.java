@@ -1,7 +1,6 @@
 package com.turnos.turnos.service.impl;
 
 import com.turnos.turnos.model.Instituto;
-import com.turnos.turnos.model.Instituto;
 import com.turnos.turnos.repository.InstitutoRepository;
 import com.turnos.turnos.service.IInstitutoService;
 import java.util.List;

@@ -18,7 +18,7 @@ import lombok.Setter;
 public class Paciente extends Persona {
     
     @Id
-    @GeneratedValue ( strategy = GenerationType.AUTO )
+    @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id ;
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "paciente" )
