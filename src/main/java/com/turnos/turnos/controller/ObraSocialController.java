@@ -1,10 +1,14 @@
 package com.turnos.turnos.controller;
 
+import com.turnos.turnos.DTO.NuevaObraSocialDTO;
 import com.turnos.turnos.model.ObraSocial;
+import com.turnos.turnos.model.Plan;
 import com.turnos.turnos.service.impl.ObraSocialServiceImpl;
+import com.turnos.turnos.service.impl.PlanServiceImpl;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,6 +26,8 @@ public class ObraSocialController {
     
     @Autowired
     private ObraSocialServiceImpl obraSocialService;
+    @Autowired
+    private PlanServiceImpl planService;
     
     @GetMapping( "/obraSocial/load" )
     @ResponseBody
@@ -30,21 +36,29 @@ public class ObraSocialController {
     }
     
     @PostMapping( "/obraSocial/create" )
-    public ResponseEntity<ObraSocial> createObraSocial( @RequestBody ObraSocial obraSocial ) {
-        ResponseEntity<ObraSocial> response;
+    public ResponseEntity<?> createObraSocial( @RequestBody NuevaObraSocialDTO obraSocialdto ) {
+        //creando nueva obra social
+        ObraSocial createdObraSocial = new ObraSocial();
+        createdObraSocial.setNombre(obraSocialdto.getNombre());
+        createdObraSocial.setDireccion(obraSocialdto.getDireccion());
         
-        ObraSocial createdObraSocial = obraSocialService.createObraSocial(obraSocial).getBody();
+        //guardando
+        ObraSocial savedObraSocial = obraSocialService.createObraSocial(createdObraSocial);
         
-        if ( createdObraSocial != null ){
-            
-        response = ResponseEntity.ok(createdObraSocial);
-            
-        }else {
-            
-            response = ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
-            
+        //Creando Planes
+        Set<Plan> planesCreados = new HashSet<>();
+        for ( Plan plan : obraSocialdto.getPlanes() ){
+            Plan newplan = new Plan();
+            newplan.setNombre(plan.getNombre());
+            newplan.setObraSocial(savedObraSocial);
+            planService.createPlan(newplan);
+            planesCreados.add(newplan);
         }
-        return response;
+        
+        //Agregando los planes creados
+        savedObraSocial.setPlanes(planesCreados);
+        
+        return ResponseEntity.ok(savedObraSocial);
     }  
     
     @DeleteMapping( "/obraSocial/delete/{id}" )
@@ -58,5 +72,11 @@ public class ObraSocialController {
         return obraSocialService.updateObraSocial(id, toUpdateObraSocial);
     
     };
+    
+    @GetMapping ( "/obraSocial/planes/{id}" )
+    public ResponseEntity<List> getPlanesByObraSocial(@PathVariable Long id){
+        List<Plan> planes = planService.getPlanesByObraSocial(id);                
+        return ResponseEntity.ok(planes);
+    }
     
 }

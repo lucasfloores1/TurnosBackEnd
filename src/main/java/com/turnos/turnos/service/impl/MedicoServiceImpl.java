@@ -15,6 +15,8 @@ public class MedicoServiceImpl implements IMedicoService {
     
     @Autowired
     MedicoRepository medicoRepository;
+    
+    @Autowired
     Medico_InstitutoRepository medico_InstitutoRepository;
 
     @Override
@@ -35,9 +37,29 @@ public class MedicoServiceImpl implements IMedicoService {
     @Override
     public void createMedico(Medico medico, Medico_Instituto medico_Instituto) {
         
-        medicoRepository.save(medico);
         medico_InstitutoRepository.save(medico_Instituto);
+        medicoRepository.save(medico);
         
+    }
+
+    @Override
+    public Medico addMedico(Medico medico) {
+        
+        Medico createdMedico = new Medico();
+        createdMedico.setNombre(medico.getNombre());
+        createdMedico.setDni(medico.getDni());
+        createdMedico.setDireccion(medico.getDireccion());
+        createdMedico.setMail(medico.getMail());
+        createdMedico.setMatricula(medico.getMatricula());
+        createdMedico.setTel(medico.getTel());
+        createdMedico.setMedicoInstituto(medico.getMedicoInstituto());
+        
+        return medicoRepository.save(createdMedico);
+    }
+
+    @Override
+    public Medico_Instituto addMedico_Instituto(Medico_Instituto medico_instituto) {
+        return medico_InstitutoRepository.save(medico_instituto);
     }
     
 }

@@ -1,5 +1,6 @@
 package com.turnos.turnos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,7 +20,7 @@ import lombok.Setter;
 public class Instituto {
     
     @Id
-    @GeneratedValue ( strategy = GenerationType.AUTO )
+    @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id ;
     
     @Column ( name = "nombre", length = 50, nullable = false )
@@ -32,9 +33,11 @@ public class Instituto {
     private Long cuit;    
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "instituto" )
+    @JsonIgnore
     private Set<Medico_Instituto> medicoInstituto = new HashSet<>();
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "instituto" )
+    @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
 
     public Instituto() {

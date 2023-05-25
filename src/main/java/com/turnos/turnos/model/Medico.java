@@ -1,5 +1,6 @@
 package com.turnos.turnos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,16 +20,18 @@ import lombok.Setter;
 public class Medico extends Persona{
     
     @Id
-    @GeneratedValue ( strategy = GenerationType.AUTO )
+    @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id ;
     
     @Column ( name = "matricula", nullable = false )
     private int matricula;
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "medico" )
+    @JsonIgnore
     private Set<Medico_Instituto> medicoInstituto = new HashSet<>();
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "medico" )
+    @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
 
     public Medico() {

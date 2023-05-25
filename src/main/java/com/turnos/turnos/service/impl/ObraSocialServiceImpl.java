@@ -21,14 +21,28 @@ public class ObraSocialServiceImpl implements IObraSocialService {
         
     }
 
+    /*@Override
+    public ObraSocial createObraSocial(ObraSocial obraSocial) {
+        
+        ObraSocial createdObraSocial = obraSocialRepository.findById(obraSocial.getId()).orElse(null);
+        
+        createdObraSocial.setNombre(obraSocial.getNombre());
+        createdObraSocial.setDireccion(obraSocial.getDireccion());
+        createdObraSocial.setPlanes(obraSocial.getPlanes());
+        
+        return obraSocialRepository.save(createdObraSocial);
+        
+    }*/
+    
     @Override
-    public ResponseEntity<ObraSocial> createObraSocial(ObraSocial obraSocial) {
-        
-        ObraSocial createdObraSocial = obraSocialRepository.save(obraSocial);
-        
-        return ResponseEntity.ok(createdObraSocial);
-        
+    public ObraSocial createObraSocial(ObraSocial obraSocial) {
+        ObraSocial createdObraSocial = new ObraSocial();
+        createdObraSocial.setNombre(obraSocial.getNombre());
+        createdObraSocial.setDireccion(obraSocial.getDireccion());
+        createdObraSocial.setPlanes(obraSocial.getPlanes());
+        return obraSocialRepository.save(createdObraSocial);
     }
+    
 
     @Override
     public void deleteObraSocial(Long id) {

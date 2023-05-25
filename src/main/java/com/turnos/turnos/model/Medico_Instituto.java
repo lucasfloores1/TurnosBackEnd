@@ -19,7 +19,7 @@ import lombok.Setter;
 public class Medico_Instituto {
 
     @Id
-    @GeneratedValue ( strategy = GenerationType.AUTO )
+    @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id ;
     
     @ManyToOne ( fetch = FetchType.EAGER )
@@ -28,7 +28,7 @@ public class Medico_Instituto {
     @ManyToOne ( fetch = FetchType.EAGER )
     private Instituto instituto;
     
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "medico_instituto" )
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "medicoInstituto" )
     private Set<Horario> horarios = new HashSet<>();
 
     public Medico_Instituto() {
