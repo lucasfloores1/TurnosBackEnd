@@ -94,7 +94,7 @@ public class MedicoController {
     
     @GetMapping ("medico/load/{id}")
     @ResponseBody
-    public ResponseEntity<GetMedicoDTO> loadMedico(@PathVariable Long id){
+    public ResponseEntity<GetMedicoDTO> getMedicoById(@PathVariable Long id){
         
         //Obtengo los datos por id
         Medico medico = medicoService.getMedicoById(id);

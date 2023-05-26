@@ -53,4 +53,9 @@ public class TurnoServiceImpl implements ITurnoService {
         
     }
     
+    @Override
+    public Turno getTurnoById (Long id){
+        return turnoRepository.findById(id).orElse(null);
+    }
+    
 }

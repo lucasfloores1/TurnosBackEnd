@@ -24,7 +24,7 @@ public class Turno {
     private Long id ;
     
     @Column( name = "fecha" )
-    @JsonFormat ( pattern = "yyyy-MM-dd" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha;
     
     @Column( name = "confirmado" )

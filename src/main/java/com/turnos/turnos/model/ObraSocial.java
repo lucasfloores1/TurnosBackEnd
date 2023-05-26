@@ -28,7 +28,7 @@ public class ObraSocial {
     @Column ( name = "nombre", length = 50, nullable = false )
     private String nombre;
     
-    @Column ( name = "direccion", length = 100, nullable = false )
+    @Column ( name = "direccion", length = 100)
     private String direccion;
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obraSocial" )

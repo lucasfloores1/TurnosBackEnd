@@ -36,6 +36,7 @@ public class ObraSocialController {
     }
     
     @PostMapping( "/obraSocial/create" )
+    @ResponseBody
     public ResponseEntity<?> createObraSocial( @RequestBody NuevaObraSocialDTO obraSocialdto ) {
         //creando nueva obra social
         ObraSocial createdObraSocial = new ObraSocial();

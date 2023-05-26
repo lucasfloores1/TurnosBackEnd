@@ -97,6 +97,7 @@ public class PacienteController {
     };
     
     @PostMapping( "/paciente/create" )
+    @ResponseBody
     public ResponseEntity<?> createPaciente( @RequestBody NuevoPacienteDTO pacientedto ) {
         
         //Establezco la obra social

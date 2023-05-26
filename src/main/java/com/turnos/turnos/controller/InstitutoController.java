@@ -37,6 +37,7 @@ public class InstitutoController {
     }
     
     @PostMapping( "/instituto/create" )
+    @ResponseBody
     public ResponseEntity<Instituto> createInstituto( @RequestBody Instituto instituto ) {
         ResponseEntity<Instituto> response;
         

@@ -14,5 +14,6 @@ public interface ITurnoService {
     
     public ResponseEntity<Turno> updateTurno( Long id, Turno turno );
     
+    public Turno getTurnoById (Long id);   
     
 }
