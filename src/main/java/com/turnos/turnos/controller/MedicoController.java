@@ -132,6 +132,7 @@ public class MedicoController {
                 horarioDTO.setDia(horario.getDia());
                 horarioDTO.setInicio(horario.getInicio());
                 horarioDTO.setFin(horario.getFin());
+                horarioDTO.setIntervalo(horario.getIntervalo());
                 
                 //agregamos a list<horario>
                 horariosDTO.add(horarioDTO);

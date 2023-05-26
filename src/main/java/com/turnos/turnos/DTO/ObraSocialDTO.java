@@ -1,27 +1,29 @@
 package com.turnos.turnos.DTO;
 
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class InstitutoDTO {
+public class ObraSocialDTO {
     
     private Long id;
     private String nombre;
     private String direccion;
     
-    private List<HorarioDTO> horarios;
+    private PlanDTO plan;
+    
+    private String afiliado;
 
-    public InstitutoDTO() {
+    public ObraSocialDTO() {
     }
 
-    public InstitutoDTO(Long id, String nombre, String direccion, List<HorarioDTO> horarios) {
+    public ObraSocialDTO(Long id, String nombre, String direccion, PlanDTO plan, String afiliado) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.horarios = horarios;
+        this.plan = plan;
+        this.afiliado = afiliado;
     }
-
+    
 }

@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -30,6 +32,7 @@ public class ObraSocial {
     private String direccion;
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obraSocial" )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Set<Paciente_ObraSocial> pacienteObraSocial = new HashSet<>();
     
