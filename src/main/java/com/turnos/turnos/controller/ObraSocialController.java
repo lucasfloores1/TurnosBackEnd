@@ -38,7 +38,7 @@ public class ObraSocialController {
         return obraSocialService.getObraSocials();
     }
     
-    @GetMapping( "obraSocial/user/load" )
+    @GetMapping( "obraSocial/user/{id}" )
     @ResponseBody
     public List<ObraSocial> loadObrasSocialesByUser( @PathVariable Long id ){
         return obraSocialService.getObrasSocialesByUser(id);

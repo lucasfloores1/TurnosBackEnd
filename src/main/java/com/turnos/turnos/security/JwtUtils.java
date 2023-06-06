@@ -19,7 +19,7 @@ public class JwtUtils {
     
     private String SECRET_KEY = Base64.getEncoder().encodeToString(key.getBytes());
     
-    public static final long JWT_TOKEN_VALIDITY = 1000 * 60 * 60 * (long) 8; // 8 Horas
+    public static final long JWT_TOKEN_VALIDITY = 1000 * 60 * 60 * (long) 24; // 24 Horas
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

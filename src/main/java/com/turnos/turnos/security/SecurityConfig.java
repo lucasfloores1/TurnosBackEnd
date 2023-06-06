@@ -1,6 +1,5 @@
 package com.turnos.turnos.security;
 
-import com.turnos.turnos.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +26,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
       http
-          .csrf().disable() // (2)
+          .csrf().disable()
           .authorizeHttpRequests((authorize) -> authorize
               .requestMatchers("/user/**").permitAll()
               .anyRequest().authenticated()
@@ -38,12 +37,6 @@ public class SecurityConfig {
               .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
           );
       ;
-      /*
-      http
-          .formLogin(withDefaults()); // (1)
-      http
-          .httpBasic(withDefaults()); // (1)
-       */
       return http.build();
     }
 
