@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,9 @@ public class UserController {
     
     @Autowired
     private UserServiceImpl userService;
+    
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     
     @GetMapping ( "/user/load" )
     @ResponseBody
@@ -46,6 +50,7 @@ public class UserController {
     public ResponseEntity<User> createUser( @RequestBody User user ) {
         ResponseEntity<User> response;
         
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         User createdUser = userService.createUser(user).getBody();
         
         if ( createdUser != null ){

@@ -9,20 +9,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.util.Collection;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
 @Setter
-
-
-public class User {
+public class User implements UserDetails{
     
     @Id
     @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id;
+    
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
     
     @Column(name = "username", nullable = false, unique = true)
     private String username;
@@ -30,34 +34,31 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
     
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "paciente" )
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user" )
     @JsonIgnore
     private List<Paciente> pacientes;
     
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "medico" )
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user" )
     @JsonIgnore
     private List<Medico> medicos;
     
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "instituto" )
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user" )
     @JsonIgnore
     private List<Instituto>institutos;
     
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obraSocial" )
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user" )
     @JsonIgnore
     private List<ObraSocial> obraSociales;
     
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "plan" )
-    @JsonIgnore
-    private List<Plan> planes;
-    
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "estudio" )
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user" )
     @JsonIgnore
     private List<Estudio> estudios;
 
     public User() {
     }
 
-    public User(Long id, String username, String password, List<Paciente> pacientes, List<Medico> medicos, List<Instituto> institutos, List<ObraSocial> obraSociales, List<Plan> planes, List<Estudio> estudios) {
+    public User(String email ,Long id, String username, String password, List<Paciente> pacientes, List<Medico> medicos, List<Instituto> institutos, List<ObraSocial> obraSociales, List<Estudio> estudios) {
+        this.email = email;
         this.id = id;
         this.username = username;
         this.password = password;
@@ -65,8 +66,32 @@ public class User {
         this.medicos = medicos;
         this.institutos = institutos;
         this.obraSociales = obraSociales;
-        this.planes = planes;
         this.estudios = estudios;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
     
     

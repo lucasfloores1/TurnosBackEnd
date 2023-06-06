@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,14 +33,18 @@ public class Estudio {
     @OneToMany ( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "estudio" )
     @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
+    
+    @ManyToOne
+    private User user;
 
     public Estudio() {
     }
 
-    public Estudio(Long id, String nombre, String nomenclador) {
+    public Estudio(Long id, String nombre, String nomenclador, User user) {
         this.id = id;
         this.nombre = nombre;
         this.nomenclador = nomenclador;
+        this.user = user;
     }
     
 }

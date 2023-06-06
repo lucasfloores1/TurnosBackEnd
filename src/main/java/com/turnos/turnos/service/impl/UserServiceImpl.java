@@ -43,6 +43,7 @@ public class UserServiceImpl implements IUserService {
         
         User user = userRepository.findById(id).orElse(null);
         
+        user.setEmail   (toUpdateUser.getEmail());
         user.setUsername ( toUpdateUser.getUsername());
         user.setPassword( toUpdateUser.getPassword());
         
