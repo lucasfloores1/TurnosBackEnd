@@ -11,6 +11,7 @@ import com.turnos.turnos.service.impl.ObraSocialServiceImpl;
 import com.turnos.turnos.service.impl.PacienteServiceImpl;
 import com.turnos.turnos.service.impl.PlanServiceImpl;
 import com.turnos.turnos.service.impl.TurnoServiceImpl;
+import com.turnos.turnos.service.impl.UserServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,8 @@ public class TurnoController {
     private PlanServiceImpl planService;
     @Autowired
     private EstudioServiceImpl estudioService;
+    @Autowired
+    private UserServiceImpl userService;
     
     @GetMapping( "/turno/load" )
     @ResponseBody
@@ -55,6 +58,7 @@ public class TurnoController {
         
         //creo el turno
         Turno createdTurno = new Turno();
+        createdTurno.setUser(userService.getUserById(turnoDTO.getUserId()));
         createdTurno.setFecha(turnoDTO.getFecha());
         createdTurno.setCargado(turnoDTO.isCargado());
         createdTurno.setConfirmado(turnoDTO.isConfirmado());
@@ -92,4 +96,17 @@ public class TurnoController {
     
     };
     
+    @GetMapping( "/turno/medico/{id}" )
+    @ResponseBody
+    public List<Turno> loadTurnosByMedico( @PathVariable Long id ){
+        return turnoService.getTurnosByMedico(id);
+    }
+    
+    @GetMapping( "turno/user/{id}" )
+    @ResponseBody
+    public List<Turno> loadTurnosByUser( @PathVariable Long id ){
+    
+        return turnoService.getTurnosByUser(id);
+        
+    }
 }

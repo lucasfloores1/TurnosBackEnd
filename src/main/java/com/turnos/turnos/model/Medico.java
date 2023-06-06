@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,19 +34,28 @@ public class Medico extends Persona{
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "medico" )
     @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
+    
+    @ManyToOne
+    private User user;
 
     public Medico() {
     }
 
-    public Medico(Long id, int matricula) {
+    public Medico(Long id, int matricula, User user) {
         this.id = id;
         this.matricula = matricula;
+        this.user = user;
     }
 
-    public Medico(Long id, int matricula, String nombre, Long dni, String tel, String mail, String direccion) {
+    public Medico(Long id, int matricula, User user, String nombre, Long dni, String tel, String mail, String direccion) {
         super(nombre, dni, tel, mail, direccion);
         this.id = id;
         this.matricula = matricula;
+        this.user = user;
     }
+
+
+
+
     
 }

@@ -1,7 +1,9 @@
 package com.turnos.turnos.service.impl;
 
 import com.turnos.turnos.model.Estudio;
+import com.turnos.turnos.model.User;
 import com.turnos.turnos.repository.EstudioRepository;
+import com.turnos.turnos.repository.UserRepository;
 import com.turnos.turnos.service.IEstudioService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class EstudioServiceImpl implements IEstudioService{
 
     @Autowired
     EstudioRepository estudioRepository;
+    
+    @Autowired
+    UserRepository userRepository;
     
     @Override
     public List<Estudio> getEstudios() {
@@ -50,6 +55,15 @@ public class EstudioServiceImpl implements IEstudioService{
         
         return ResponseEntity.ok(updatedEstudio);
         
+    }
+
+    @Override
+    public List<Estudio> getEstudiosByUser( Long id ) {
+        
+        User user = userRepository.findById(id).orElse(null);
+        
+        return estudioRepository.findByUser(user);
+                
     }
     
 }

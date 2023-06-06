@@ -23,10 +23,16 @@ public class EstudioController {
     @Autowired
     private EstudioServiceImpl estudioService;
     
-    @GetMapping( "/estudio/load" )
+    @GetMapping( "/estudio/load/" )
     @ResponseBody
-    public List<Estudio> loadEstudio(){
+    public List<Estudio> loadEstudios(){
         return estudioService.getEstudios();
+    }
+    
+    @GetMapping( "/estudio/user/{id}" )
+    @ResponseBody
+    public List<Estudio> loadEstudiosByUserId ( @PathVariable Long id ){
+        return estudioService.getEstudiosByUser(id);
     }
     
     @GetMapping( "/estudio/load/{id}" )

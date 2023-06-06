@@ -3,8 +3,10 @@ package com.turnos.turnos.service.impl;
 
 import com.turnos.turnos.model.Medico;
 import com.turnos.turnos.model.Medico_Instituto;
+import com.turnos.turnos.model.User;
 import com.turnos.turnos.repository.MedicoRepository;
 import com.turnos.turnos.repository.Medico_InstitutoRepository;
+import com.turnos.turnos.repository.UserRepository;
 import com.turnos.turnos.service.IMedicoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class MedicoServiceImpl implements IMedicoService {
     
     @Autowired
     MedicoRepository medicoRepository;
+    
+    @Autowired
+    UserRepository userRepository;
     
     @Autowired
     Medico_InstitutoRepository medico_InstitutoRepository;
@@ -60,6 +65,14 @@ public class MedicoServiceImpl implements IMedicoService {
     @Override
     public Medico_Instituto addMedico_Instituto(Medico_Instituto medico_instituto) {
         return medico_InstitutoRepository.save(medico_instituto);
+    }
+
+    @Override
+    public List<Medico> getMedicosByUser(Long id) {
+        
+        User user = userRepository.findById(id).orElse(null);
+        return medicoRepository.findByUser(user);
+        
     }
     
 }

@@ -8,6 +8,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
@@ -43,13 +44,18 @@ public class ObraSocial {
     @OneToMany ( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obraSocial"  )
     @JsonIgnore
     private Set<Plan> planes = new HashSet<>();
-
-    public ObraSocial(Long id, String nombre, String direccion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
-    }
+    
+    @ManyToOne
+    private User user;
 
     public ObraSocial() {
     }
+
+    public ObraSocial(Long id, String nombre, String direccion, User user) {
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.user = user;
+    }
+    
 }

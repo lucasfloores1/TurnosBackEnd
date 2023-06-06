@@ -13,6 +13,7 @@ import com.turnos.turnos.repository.Paciente_ObraSocialRepository;
 import com.turnos.turnos.service.impl.ObraSocialServiceImpl;
 import com.turnos.turnos.service.impl.PacienteServiceImpl;
 import com.turnos.turnos.service.impl.PlanServiceImpl;
+import com.turnos.turnos.service.impl.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +43,8 @@ public class PacienteController {
     private PlanServiceImpl planService;
     @Autowired
     private Paciente_ObraSocialRepository paciente_ObrasocialRepository;
+    @Autowired
+    private UserServiceImpl userService;
     
     @GetMapping( "/paciente/load" )
     @ResponseBody
@@ -49,9 +52,18 @@ public class PacienteController {
         return pacienteService.getPacientes();
     }
     
+    @GetMapping( "/paciente/user/{id}" )
+    @ResponseBody
+    public List<Paciente> loadPacientesByUser ( @PathVariable Long id ){
+        
+        return pacienteService.getPacientesByUser(id);
+        
+    }
+    
     @GetMapping( "/paciente/load/{id}" )
     @ResponseBody
     public ResponseEntity<GetPacienteDTO> loadPacienteById( @PathVariable Long id ){
+        
         //Obtengo el paciente por id
         Paciente paciente = pacienteService.getPacienteById(id);
         
@@ -109,6 +121,7 @@ public class PacienteController {
         //Creo el paciente
         Paciente createdPaciente = new Paciente();
         
+        createdPaciente.setUser(userService.getUserById(pacientedto.getUserId()));
         createdPaciente.setNombre(pacientedto.getNombre());
         createdPaciente.setDni(pacientedto.getDni());
         createdPaciente.setMail(pacientedto.getMail());

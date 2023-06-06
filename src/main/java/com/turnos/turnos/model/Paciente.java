@@ -7,6 +7,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,18 +34,22 @@ public class Paciente extends Persona {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
+    
+    @ManyToOne
+    private User user;
 
-    public Paciente(Long id) {
+    public Paciente(Long id, User user) {
         this.id = id;
+        this.user = user;
     }
 
-    public Paciente(Long id, String nombre, Long dni, String tel, String mail, String direccion) {
+    public Paciente(Long id, User user, String nombre, Long dni, String tel, String mail, String direccion) {
         super(nombre, dni, tel, mail, direccion);
         this.id = id;
+        this.user = user;
     }
 
     public Paciente() {
     }
-
-    
+ 
 }

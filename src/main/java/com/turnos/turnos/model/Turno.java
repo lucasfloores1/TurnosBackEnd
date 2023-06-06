@@ -10,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -56,11 +55,14 @@ public class Turno {
     @ManyToOne ( fetch = FetchType.EAGER )
     @JoinColumn ( name = "estudio_id" )
     private Estudio estudio;
+    
+    @ManyToOne
+    private User user;
 
     public Turno() {
     }
 
-    public Turno(Long id, LocalDateTime fecha, LocalTime hora, boolean confirmado, boolean cargado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio) {
+    public Turno(Long id, LocalDateTime fecha, boolean confirmado, boolean cargado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio, User user) {
         this.id = id;
         this.fecha = fecha;
         this.confirmado = confirmado;
@@ -71,6 +73,9 @@ public class Turno {
         this.medico = medico;
         this.instituto = instituto;
         this.estudio = estudio;
+        this.user = user;
     }
+
+
     
 }

@@ -1,5 +1,6 @@
 package com.turnos.turnos.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,6 +30,7 @@ public class Medico_Instituto {
     private Instituto instituto;
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "medicoInstituto" )
+    @JsonIgnore
     private Set<Horario> horarios = new HashSet<>();
 
     public Medico_Instituto() {

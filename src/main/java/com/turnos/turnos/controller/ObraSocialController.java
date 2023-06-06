@@ -5,6 +5,7 @@ import com.turnos.turnos.model.ObraSocial;
 import com.turnos.turnos.model.Plan;
 import com.turnos.turnos.service.impl.ObraSocialServiceImpl;
 import com.turnos.turnos.service.impl.PlanServiceImpl;
+import com.turnos.turnos.service.impl.UserServiceImpl;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +29,8 @@ public class ObraSocialController {
     private ObraSocialServiceImpl obraSocialService;
     @Autowired
     private PlanServiceImpl planService;
+    @Autowired
+    private UserServiceImpl userService;
     
     @GetMapping( "/obraSocial/load" )
     @ResponseBody
@@ -35,11 +38,18 @@ public class ObraSocialController {
         return obraSocialService.getObraSocials();
     }
     
+    @GetMapping( "obraSocial/user/load" )
+    @ResponseBody
+    public List<ObraSocial> loadObrasSocialesByUser( @PathVariable Long id ){
+        return obraSocialService.getObrasSocialesByUser(id);
+    }
+    
     @PostMapping( "/obraSocial/create" )
     @ResponseBody
     public ResponseEntity<?> createObraSocial( @RequestBody NuevaObraSocialDTO obraSocialdto ) {
         //creando nueva obra social
         ObraSocial createdObraSocial = new ObraSocial();
+        createdObraSocial.setUser( userService.getUserById( obraSocialdto.getUserId()) );
         createdObraSocial.setNombre(obraSocialdto.getNombre());
         createdObraSocial.setDireccion(obraSocialdto.getDireccion());
         

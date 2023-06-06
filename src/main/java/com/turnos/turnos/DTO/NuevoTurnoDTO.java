@@ -12,6 +12,7 @@ public class NuevoTurnoDTO {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha;
     
+    private Long userId;
     private boolean confirmado;
     private boolean cargado;
     private Long idMedico;
@@ -24,7 +25,8 @@ public class NuevoTurnoDTO {
     public NuevoTurnoDTO() {
     }
 
-    public NuevoTurnoDTO(LocalDateTime fecha, boolean confirmado, boolean cargado, Long idMedico, Long idInstituto, Long idPaciente, Long idObraSocial, Long idPlan, Long idEstudio) {
+    public NuevoTurnoDTO(Long userId, LocalDateTime fecha, boolean confirmado, boolean cargado, Long idMedico, Long idInstituto, Long idPaciente, Long idObraSocial, Long idPlan, Long idEstudio) {
+        this.userId = userId;
         this.fecha = fecha;
         this.confirmado = confirmado;
         this.cargado = cargado;

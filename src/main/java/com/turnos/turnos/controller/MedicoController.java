@@ -8,9 +8,11 @@ import com.turnos.turnos.model.Horario;
 import com.turnos.turnos.model.Instituto;
 import com.turnos.turnos.model.Medico;
 import com.turnos.turnos.model.Medico_Instituto;
+import com.turnos.turnos.model.User;
 import com.turnos.turnos.service.impl.HorarioServiceImpl;
 import com.turnos.turnos.service.impl.InstitutoServiceImpl;
 import com.turnos.turnos.service.impl.MedicoServiceImpl;
+import com.turnos.turnos.service.impl.UserServiceImpl;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +37,8 @@ public class MedicoController {
     InstitutoServiceImpl institutoService;
     @Autowired
     HorarioServiceImpl horarioService;
+    @Autowired
+    UserServiceImpl userService;
     
     @GetMapping( "/medico/load" )
     @ResponseBody
@@ -42,15 +46,24 @@ public class MedicoController {
         return medicoService.getMedicos();
     }
     
+    @GetMapping( "/medico/user/{id}" )
+    @ResponseBody
+    public List<Medico> getMedicosByUser( @PathVariable Long id ) {
+        
+        return medicoService.getMedicosByUser(id);
+        
+    }
+    
     @PostMapping( "/medico/create" )
     @ResponseBody
     public ResponseEntity<?> createMedico(@RequestBody NuevoMedicoDTO medicodto ){
         
         //Establezco el Instituto
-        Instituto instituto = institutoService.getInstitutoById(medicodto.getInstituto());
+        Instituto instituto = institutoService.getInstitutoById(medicodto.getIdInstituto());
         
         //Creo el medico
         Medico createdMedico = new Medico();
+        createdMedico.setUser(userService.getUserById(medicodto.getUserId()));
         createdMedico.setNombre(medicodto.getNombre());
         createdMedico.setTel(medicodto.getTel());
         createdMedico.setDni(medicodto.getDni());

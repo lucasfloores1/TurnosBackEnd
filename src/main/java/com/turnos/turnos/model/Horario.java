@@ -26,11 +26,11 @@ public class Horario {
     
     @JsonFormat(pattern = "HH:mm:ss")
     @Column ( name = "inicio", nullable = false )
-    private LocalTime inicio;
+    private String inicio;
     
     @JsonFormat(pattern = "HH:mm:ss")
     @Column ( name = "fin", nullable = false )
-    private LocalTime fin;
+    private String fin;
     
     @Column( name = "intervalo", nullable = false )
     private int intervalo;
@@ -41,7 +41,7 @@ public class Horario {
     public Horario() {
     }
 
-    public Horario(Long id, int dia, LocalTime inicio, LocalTime fin, int intervalo, Medico_Instituto medicoInstituto) {
+    public Horario(Long id, int dia, String inicio, String fin, int intervalo, Medico_Instituto medicoInstituto) {
         this.id = id;
         this.dia = dia;
         this.inicio = inicio;
