@@ -8,7 +8,6 @@ import com.turnos.turnos.model.Horario;
 import com.turnos.turnos.model.Instituto;
 import com.turnos.turnos.model.Medico;
 import com.turnos.turnos.model.Medico_Instituto;
-import com.turnos.turnos.model.User;
 import com.turnos.turnos.service.impl.HorarioServiceImpl;
 import com.turnos.turnos.service.impl.InstitutoServiceImpl;
 import com.turnos.turnos.service.impl.MedicoServiceImpl;

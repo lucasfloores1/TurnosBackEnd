@@ -1,7 +1,9 @@
 package com.turnos.turnos.controller;
 
+import com.turnos.turnos.DTO.NuevoEstudioDTO;
 import com.turnos.turnos.model.Estudio;
 import com.turnos.turnos.service.impl.EstudioServiceImpl;
+import com.turnos.turnos.service.impl.UserServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,9 @@ public class EstudioController {
     
     @Autowired
     private EstudioServiceImpl estudioService;
+    
+    @Autowired
+    private UserServiceImpl userService;
     
     @GetMapping( "/estudio/load/" )
     @ResponseBody
@@ -44,20 +49,16 @@ public class EstudioController {
     
     @PostMapping( "/estudio/create" )
     @ResponseBody
-    public ResponseEntity<Estudio> createEstudio( @RequestBody Estudio estudio ) {
+    public ResponseEntity<Estudio> createEstudio( @RequestBody NuevoEstudioDTO estudioDTO ) {
         ResponseEntity<Estudio> response;
         
-        Estudio createdEstudio = estudioService.createEstudio(estudio).getBody();
-        
-        if ( createdEstudio != null ){
+        Estudio createdEstudio = new Estudio();
+        createdEstudio.setUser(userService.getUserById(estudioDTO.getUserId()));
+        createdEstudio.setNombre(estudioDTO.getNombre());
+        createdEstudio.setNomenclador(estudioDTO.getNomenclador());     
             
-        response = ResponseEntity.ok(createdEstudio);
+        response = estudioService.createEstudio(createdEstudio);
             
-        }else {
-            
-            response = ResponseEntity.status( HttpStatus.INTERNAL_SERVER_ERROR ).build();
-            
-        }
         return response;
     }  
     

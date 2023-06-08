@@ -51,6 +51,7 @@ public class MedicoServiceImpl implements IMedicoService {
     public Medico addMedico(Medico medico) {
         
         Medico createdMedico = new Medico();
+        createdMedico.setUser(medico.getUser());
         createdMedico.setNombre(medico.getNombre());
         createdMedico.setDni(medico.getDni());
         createdMedico.setDireccion(medico.getDireccion());

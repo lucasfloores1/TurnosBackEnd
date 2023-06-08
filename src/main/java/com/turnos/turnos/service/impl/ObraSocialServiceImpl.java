@@ -42,6 +42,7 @@ public class ObraSocialServiceImpl implements IObraSocialService {
     @Override
     public ObraSocial createObraSocial(ObraSocial obraSocial) {
         ObraSocial createdObraSocial = new ObraSocial();
+        createdObraSocial.setUser(obraSocial.getUser());
         createdObraSocial.setNombre(obraSocial.getNombre());
         createdObraSocial.setDireccion(obraSocial.getDireccion());
         createdObraSocial.setPlanes(obraSocial.getPlanes());
