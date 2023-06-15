@@ -14,6 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -32,10 +34,12 @@ public class Medico extends Persona{
     private Set<Medico_Instituto> medicoInstituto = new HashSet<>();
     
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "medico" )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
     
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     public Medico() {

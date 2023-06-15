@@ -1,6 +1,7 @@
 package com.turnos.turnos.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,6 +33,9 @@ public class Turno {
     @Column( name = "cargado" )
     private boolean cargado;
     
+    @Column( name = "cancelado" )
+    private boolean cancelado;
+    
     @ManyToOne ( fetch = FetchType.EAGER )
     @JoinColumn ( name = "paciente_id" )
     private Paciente paciente;
@@ -57,16 +61,18 @@ public class Turno {
     private Estudio estudio;
     
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     public Turno() {
     }
 
-    public Turno(Long id, LocalDateTime fecha, boolean confirmado, boolean cargado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio, User user) {
+    public Turno(Long id, LocalDateTime fecha, boolean confirmado, boolean cargado, boolean cancelado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio, User user) {
         this.id = id;
         this.fecha = fecha;
         this.confirmado = confirmado;
         this.cargado = cargado;
+        this.cancelado = cancelado;
         this.paciente = paciente;
         this.obraSocial = obraSocial;
         this.plan = plan;
@@ -75,6 +81,7 @@ public class Turno {
         this.estudio = estudio;
         this.user = user;
     }
+
 
 
     

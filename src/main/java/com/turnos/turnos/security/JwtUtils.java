@@ -1,5 +1,6 @@
 package com.turnos.turnos.security;
 
+import com.turnos.turnos.service.impl.EmailServiceImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,6 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -17,7 +20,9 @@ public class JwtUtils {
     
     private final String key = "TURNOS_WEB_APPLICATION_DEMO_V1_API";
     
-    private String SECRET_KEY = Base64.getEncoder().encodeToString(key.getBytes());
+    private final String SECRET_KEY = Base64.getEncoder().encodeToString(key.getBytes());
+    
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(EmailServiceImpl.class);
     
     public static final long JWT_TOKEN_VALIDITY = 1000 * 60 * 60 * (long) 24; // 24 Horas
 

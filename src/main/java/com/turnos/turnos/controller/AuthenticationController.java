@@ -4,8 +4,12 @@ import com.turnos.turnos.model.User;
 import com.turnos.turnos.security.JwtRequest;
 import com.turnos.turnos.security.JwtResponse;
 import com.turnos.turnos.security.JwtUtils;
+import com.turnos.turnos.service.impl.EmailServiceImpl;
 import com.turnos.turnos.service.impl.UserDetailsServiceImpl;
+import com.turnos.turnos.service.impl.UserServiceImpl;
 import java.security.Principal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,8 +20,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,6 +38,9 @@ public class AuthenticationController {
     
     @Autowired
     private JwtUtils jwtUtils;
+    
+    @Autowired
+    private UserServiceImpl userService;
     
     @PostMapping("/user/generate-token")
     public ResponseEntity<?> generateToken( @RequestBody JwtRequest jwtRequest ) throws Exception{
@@ -62,4 +71,16 @@ public class AuthenticationController {
         return (User) this.userDetailsService.loadUserByUsername(principal.getName());
     }
     
+    @GetMapping ( "/user/validate/{token}/{id}" )
+    public ResponseEntity<?> validateUser(@PathVariable String token ,@PathVariable Long id ){
+
+        User user = userService.getUserById(id);
+        
+        if(jwtUtils.validateToken(token, user)){
+            Boolean response = true;
+            return ResponseEntity.ok(response);
+        }
+        Boolean response = false;
+        return ResponseEntity.ok(response);
+    }
 }

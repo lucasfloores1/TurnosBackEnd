@@ -15,6 +15,7 @@ public class NuevoTurnoDTO {
     private Long userId;
     private boolean confirmado;
     private boolean cargado;
+    private boolean cancelado;
     private Long idMedico;
     private Long idInstituto;
     private Long idPaciente;
@@ -25,11 +26,12 @@ public class NuevoTurnoDTO {
     public NuevoTurnoDTO() {
     }
 
-    public NuevoTurnoDTO(Long userId, LocalDateTime fecha, boolean confirmado, boolean cargado, Long idMedico, Long idInstituto, Long idPaciente, Long idObraSocial, Long idPlan, Long idEstudio) {
-        this.userId = userId;
+    public NuevoTurnoDTO(LocalDateTime fecha, Long userId, boolean confirmado, boolean cargado, boolean cancelado, Long idMedico, Long idInstituto, Long idPaciente, Long idObraSocial, Long idPlan, Long idEstudio) {
         this.fecha = fecha;
+        this.userId = userId;
         this.confirmado = confirmado;
         this.cargado = cargado;
+        this.cancelado = cancelado;
         this.idMedico = idMedico;
         this.idInstituto = idInstituto;
         this.idPaciente = idPaciente;
@@ -37,5 +39,6 @@ public class NuevoTurnoDTO {
         this.idPlan = idPlan;
         this.idEstudio = idEstudio;
     }
-    
+
+
 }

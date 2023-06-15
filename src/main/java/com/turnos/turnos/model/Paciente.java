@@ -36,6 +36,7 @@ public class Paciente extends Persona {
     private Set<Turno> turnos = new HashSet<>();
     
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     public Paciente(Long id, User user) {

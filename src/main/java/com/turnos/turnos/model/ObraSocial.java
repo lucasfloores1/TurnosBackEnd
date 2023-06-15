@@ -38,6 +38,7 @@ public class ObraSocial {
     private Set<Paciente_ObraSocial> pacienteObraSocial = new HashSet<>();
     
     @OneToMany ( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "obraSocial" )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Set<Turno> turnos = new HashSet<>();
     
@@ -46,6 +47,7 @@ public class ObraSocial {
     private Set<Plan> planes = new HashSet<>();
     
     @ManyToOne
+    @JsonIgnore
     private User user;
 
     public ObraSocial() {

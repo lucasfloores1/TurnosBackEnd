@@ -7,7 +7,10 @@ import com.turnos.turnos.repository.TurnoRepository;
 import com.turnos.turnos.repository.UserRepository;
 import com.turnos.turnos.service.IMedicoService;
 import com.turnos.turnos.service.ITurnoService;
+import jakarta.transaction.Transactional;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ public class TurnoServiceImpl implements ITurnoService {
     public IMedicoService medicoService;
     @Autowired
     public UserRepository userRepository;
+    
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(EmailServiceImpl.class);
     
     @Override
     public List<Turno> getTurnos() {
@@ -40,10 +45,16 @@ public class TurnoServiceImpl implements ITurnoService {
     }
 
     @Override
+    @Transactional
     public void deleteTurno(Long id) {
         
-        turnoRepository.deleteById(id);
-        
+        Turno turno = turnoRepository.findById(id).orElse(null);
+        if(turno != null){
+            logger.info("no dio nulo");   
+            turnoRepository.delete(turno);
+        }else {
+            logger.info("dio nulo");
+        }
     }
 
     @Override
@@ -54,6 +65,7 @@ public class TurnoServiceImpl implements ITurnoService {
         turno.setFecha ( toUpdateTurno.getFecha() );
         turno.setCargado ( toUpdateTurno.isCargado());
         turno.setConfirmado ( toUpdateTurno.isConfirmado() );
+        turno.setCancelado(toUpdateTurno.isCancelado());
         
         Turno updatedTurno = turnoRepository.save(turno);
         
@@ -79,5 +91,10 @@ public class TurnoServiceImpl implements ITurnoService {
         User user = userRepository.findById(id).orElse(null);
         return turnoRepository.findByUser(user);
         
+    }
+
+    @Override
+    public List<Turno> getTurnosForTomorrow() {
+        return turnoRepository.getTurnosForTomorrow();
     }
 }
