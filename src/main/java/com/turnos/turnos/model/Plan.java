@@ -11,6 +11,8 @@ import jakarta.persistence.OneToMany;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -28,6 +30,7 @@ public class Plan {
     private ObraSocial obraSocial;
     
     @OneToMany(mappedBy = "plan")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Set<Turno> turnos;
     
@@ -45,6 +48,7 @@ public class Plan {
         this.turnos = turnos;
         this.pacientes = pacientes;
     }
+
 
 
     

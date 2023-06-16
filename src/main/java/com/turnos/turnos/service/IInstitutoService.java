@@ -16,4 +16,6 @@ public interface IInstitutoService {
     
     public ResponseEntity<Instituto> updateInstituto( Long id, Instituto instituto );
     
+    public List<Instituto> getInstitutosByUser(Long id);
+    
 }

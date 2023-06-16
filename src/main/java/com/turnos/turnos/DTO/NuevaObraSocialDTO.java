@@ -9,11 +9,13 @@ import lombok.Setter;
 @Setter
 public class NuevaObraSocialDTO {
     
+    private Long userId;
     private String nombre;
     private String direccion;
     private Set<Plan> planes;
 
-    public NuevaObraSocialDTO(String nombre, String direccion, Set<Plan> planes) {
+    public NuevaObraSocialDTO(Long userId, String nombre, String direccion, Set<Plan> planes) {
+        this.userId = userId;
         this.nombre = nombre;
         this.direccion = direccion;
         this.planes = planes;

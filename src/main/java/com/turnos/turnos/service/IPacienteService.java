@@ -9,6 +9,8 @@ public interface IPacienteService {
     
     public List<Paciente> getPacientes();
     
+    public List<Paciente> getPacientesByUser( Long id );
+    
     public Paciente getPacienteById(Long id);
     
     public void createPaciente(Paciente paciente, Paciente_ObraSocial paciente_obraSocial);

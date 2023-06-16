@@ -1,6 +1,5 @@
 package com.turnos.turnos.DTO;
 
-import java.time.LocalTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,17 +9,19 @@ public class HorarioDTO {
     
     private Long id;
     private int dia;
-    private LocalTime inicio;
-    private LocalTime fin;
+    private String inicio;
+    private String fin;
+    private int intervalo;
 
     public HorarioDTO() {
     }
 
-    public HorarioDTO(Long id, int dia, LocalTime inicio, LocalTime fin) {
+    public HorarioDTO(Long id, int dia, String inicio, String fin, int intervalo) {
         this.id = id;
         this.dia = dia;
         this.inicio = inicio;
         this.fin = fin;
+        this.intervalo=intervalo;
     }
     
 }

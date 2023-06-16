@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin( origins = "http://localhost:4200/" )
 public class Medico_InstitutoController {
     
-/*    @Autowired
+    @Autowired
     Medico_InstitutoRepository medicoInstitutoRepository;
     
     @GetMapping( "/medicoInstituto" )
@@ -29,6 +29,6 @@ public class Medico_InstitutoController {
     public ResponseEntity<?> getMedicosInstitutoById(@PathVariable Long id){
         Medico_Instituto response = medicoInstitutoRepository.findById(id).orElse(null);
         return ResponseEntity.ok(response);
-    }*/
+    }
     
 }

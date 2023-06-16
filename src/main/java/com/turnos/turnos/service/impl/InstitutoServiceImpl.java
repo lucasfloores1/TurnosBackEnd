@@ -1,7 +1,9 @@
 package com.turnos.turnos.service.impl;
 
 import com.turnos.turnos.model.Instituto;
+import com.turnos.turnos.model.User;
 import com.turnos.turnos.repository.InstitutoRepository;
+import com.turnos.turnos.repository.UserRepository;
 import com.turnos.turnos.service.IInstitutoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,8 @@ public class InstitutoServiceImpl implements IInstitutoService {
 
     @Autowired
     InstitutoRepository institutoRepository;
+    @Autowired
+    UserRepository userRepository;
     
     @Override
     public List<Instituto> getInstitutos() {
@@ -50,6 +54,12 @@ public class InstitutoServiceImpl implements IInstitutoService {
         
         return ResponseEntity.ok(updatedInstituto);
         
+    }
+
+    @Override
+    public List<Instituto> getInstitutosByUser(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        return institutoRepository.findByUser(user);
     }
     
 }

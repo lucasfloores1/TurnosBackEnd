@@ -1,19 +1,25 @@
 
 package com.turnos.turnos.controller;
 
+import com.turnos.turnos.DTO.GetPacienteDTO;
 import com.turnos.turnos.DTO.NuevoPacienteDTO;
+import com.turnos.turnos.DTO.ObraSocialDTO;
+import com.turnos.turnos.DTO.PlanDTO;
 import com.turnos.turnos.model.ObraSocial;
 import com.turnos.turnos.model.Paciente;
 import com.turnos.turnos.model.Paciente_ObraSocial;
 import com.turnos.turnos.model.Plan;
+import com.turnos.turnos.repository.Paciente_ObraSocialRepository;
 import com.turnos.turnos.service.impl.ObraSocialServiceImpl;
 import com.turnos.turnos.service.impl.PacienteServiceImpl;
 import com.turnos.turnos.service.impl.PlanServiceImpl;
+import com.turnos.turnos.service.impl.UserServiceImpl;
+import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,6 +41,10 @@ public class PacienteController {
     private ObraSocialServiceImpl obraSocialService;
     @Autowired
     private PlanServiceImpl planService;
+    @Autowired
+    private Paciente_ObraSocialRepository paciente_ObrasocialRepository;
+    @Autowired
+    private UserServiceImpl userService;
     
     @GetMapping( "/paciente/load" )
     @ResponseBody
@@ -42,7 +52,64 @@ public class PacienteController {
         return pacienteService.getPacientes();
     }
     
+    @GetMapping( "/paciente/user/{id}" )
+    @ResponseBody
+    public List<Paciente> loadPacientesByUser ( @PathVariable Long id ){
+        
+        return pacienteService.getPacientesByUser(id);
+        
+    }
+    
+    @GetMapping( "/paciente/load/{id}" )
+    @ResponseBody
+    public ResponseEntity<GetPacienteDTO> loadPacienteById( @PathVariable Long id ){
+        
+        //Obtengo el paciente por id
+        Paciente paciente = pacienteService.getPacienteById(id);
+        
+        //Creo el DTO
+        GetPacienteDTO pacienteDTO = new GetPacienteDTO();
+        pacienteDTO.setId(paciente.getId());
+        pacienteDTO.setNombre(paciente.getNombre());
+        pacienteDTO.setDni(paciente.getDni());
+        pacienteDTO.setMail(paciente.getMail());
+        pacienteDTO.setDireccion(paciente.getDireccion());
+        pacienteDTO.setTel(paciente.getTel());
+        
+        //Obtengo la lista de obras sociales
+        List<ObraSocialDTO> obrasSocialesDTO = new ArrayList<>();
+        for ( Paciente_ObraSocial paciente_obraSocial : paciente.getObrasSociales() ){
+            
+            ObraSocial obraSocial = paciente_obraSocial.getObraSocial();
+            
+            //Creo el dto de obrasocial
+            ObraSocialDTO obraSocialDTO = new ObraSocialDTO();
+            obraSocialDTO.setId(obraSocial.getId());
+            obraSocialDTO.setNombre(obraSocial.getNombre());
+            obraSocialDTO.setDireccion(obraSocial.getDireccion());
+            
+            Plan plan = paciente_obraSocial.getPlan();
+            //Creo el dto de plan
+            PlanDTO planDTO = new PlanDTO();
+            planDTO.setId(plan.getId());
+            planDTO.setNombre(plan.getNombre());
+            
+            obraSocialDTO.setPlan(planDTO);
+            obraSocialDTO.setAfiliado(paciente_obraSocial.getAfiliado());
+            
+            //Agrego la Obra Social
+            obrasSocialesDTO.add(obraSocialDTO);
+            
+        }
+        
+        //Agrego las obras sociales al pacienteDTO
+        pacienteDTO.setObrasSociales(obrasSocialesDTO);
+        
+        return ResponseEntity.ok(pacienteDTO);
+    };
+    
     @PostMapping( "/paciente/create" )
+    @ResponseBody
     public ResponseEntity<?> createPaciente( @RequestBody NuevoPacienteDTO pacientedto ) {
         
         //Establezco la obra social
@@ -54,10 +121,12 @@ public class PacienteController {
         //Creo el paciente
         Paciente createdPaciente = new Paciente();
         
+        createdPaciente.setUser(userService.getUserById(pacientedto.getUserId()));
         createdPaciente.setNombre(pacientedto.getNombre());
         createdPaciente.setDni(pacientedto.getDni());
         createdPaciente.setMail(pacientedto.getMail());
         createdPaciente.setDireccion(pacientedto.getDireccion());
+        createdPaciente.setTel(pacientedto.getTel());
         
         //Nueva Instancia de la relacion
         Paciente_ObraSocial paciente_ObraSocial = new Paciente_ObraSocial();
@@ -76,7 +145,12 @@ public class PacienteController {
     }  
     
     @DeleteMapping( "/paciente/delete/{id}" )
+    @Transactional
     public void deletePaciente( @PathVariable Long id ){
+        
+        // Elimino todas las relaciones con las obras sociales
+        paciente_ObrasocialRepository.deleteByPacienteId(id);
+        //Elimino el paciente
         pacienteService.deletePaciente(id);
     }
     
@@ -85,7 +159,6 @@ public class PacienteController {
         
         return pacienteService.updatePaciente(id, toUpdatePaciente);
     
-    };
-        
+    };        
     
 }

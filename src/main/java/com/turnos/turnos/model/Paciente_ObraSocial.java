@@ -9,6 +9,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -23,9 +25,11 @@ public class Paciente_ObraSocial {
     private String afiliado;
     
     @ManyToOne( fetch = FetchType.EAGER )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Paciente paciente;
     
     @ManyToOne( fetch = FetchType.EAGER )
+    
     private ObraSocial obraSocial;
     
     @ManyToOne( fetch = FetchType.EAGER )

@@ -9,6 +9,8 @@ public interface IMedicoService {
     
     public List<Medico> getMedicos();
     
+    public List<Medico> getMedicosByUser( Long id );
+    
     public Medico getMedicoById(Long id);
     
     public void deleteMedico(Long id);

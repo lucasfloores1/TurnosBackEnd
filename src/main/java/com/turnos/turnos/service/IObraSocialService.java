@@ -21,4 +21,6 @@ public interface IObraSocialService {
     
     public ResponseEntity<ObraSocial> updateObraSocial( Long id, ObraSocial obraSocial );
     
+    public List<ObraSocial> getObrasSocialesByUser ( Long id );
+    
 }

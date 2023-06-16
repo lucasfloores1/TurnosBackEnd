@@ -1,6 +1,5 @@
 package com.turnos.turnos.DTO;
 
-import com.turnos.turnos.model.Horario;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;

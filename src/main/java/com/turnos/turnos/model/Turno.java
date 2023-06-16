@@ -1,6 +1,7 @@
 package com.turnos.turnos.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,7 +11,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +24,7 @@ public class Turno {
     private Long id ;
     
     @Column( name = "fecha" )
-    @JsonFormat ( pattern = "yyyy-MM-dd" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fecha;
     
     @Column( name = "confirmado" )
@@ -32,6 +32,9 @@ public class Turno {
     
     @Column( name = "cargado" )
     private boolean cargado;
+    
+    @Column( name = "cancelado" )
+    private boolean cancelado;
     
     @ManyToOne ( fetch = FetchType.EAGER )
     @JoinColumn ( name = "paciente_id" )
@@ -56,21 +59,30 @@ public class Turno {
     @ManyToOne ( fetch = FetchType.EAGER )
     @JoinColumn ( name = "estudio_id" )
     private Estudio estudio;
+    
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 
     public Turno() {
     }
 
-    public Turno(Long id, LocalDateTime fecha, LocalTime hora, boolean confirmado, boolean cargado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio) {
+    public Turno(Long id, LocalDateTime fecha, boolean confirmado, boolean cargado, boolean cancelado, Paciente paciente, ObraSocial obraSocial, Plan plan, Medico medico, Instituto instituto, Estudio estudio, User user) {
         this.id = id;
         this.fecha = fecha;
         this.confirmado = confirmado;
         this.cargado = cargado;
+        this.cancelado = cancelado;
         this.paciente = paciente;
         this.obraSocial = obraSocial;
         this.plan = plan;
         this.medico = medico;
         this.instituto = instituto;
         this.estudio = estudio;
+        this.user = user;
     }
+
+
+
     
 }

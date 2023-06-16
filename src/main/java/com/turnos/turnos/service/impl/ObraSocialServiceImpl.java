@@ -1,7 +1,9 @@
 package com.turnos.turnos.service.impl;
 
 import com.turnos.turnos.model.ObraSocial;
+import com.turnos.turnos.model.User;
 import com.turnos.turnos.repository.ObraSocialRepository;
+import com.turnos.turnos.repository.UserRepository;
 import com.turnos.turnos.service.IObraSocialService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class ObraSocialServiceImpl implements IObraSocialService {
 
     @Autowired
     public ObraSocialRepository obraSocialRepository;
+    
+    @Autowired
+    public UserRepository userRepository;
     
     @Override
     public List<ObraSocial> getObraSocials() {
@@ -37,6 +42,7 @@ public class ObraSocialServiceImpl implements IObraSocialService {
     @Override
     public ObraSocial createObraSocial(ObraSocial obraSocial) {
         ObraSocial createdObraSocial = new ObraSocial();
+        createdObraSocial.setUser(obraSocial.getUser());
         createdObraSocial.setNombre(obraSocial.getNombre());
         createdObraSocial.setDireccion(obraSocial.getDireccion());
         createdObraSocial.setPlanes(obraSocial.getPlanes());
@@ -68,6 +74,14 @@ public class ObraSocialServiceImpl implements IObraSocialService {
     @Override
     public ObraSocial getObraSocialById(Long id) {
         return obraSocialRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<ObraSocial> getObrasSocialesByUser(Long id) {
+        
+        User user = userRepository.findById(id).orElse(null);
+        return obraSocialRepository.findByUser(user);
+        
     }
     
 }

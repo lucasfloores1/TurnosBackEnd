@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nuevo Turno Agendado</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: "Poppins", Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #f0f5ff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header, .footer {
+            background-color: #4569ec;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px 5px 0 0;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .content {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            border-radius: 0 0 5px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Tienes un nuevo turno!!</h1>
+        </div>
+        <div class="content">
+            <p>Estimado/a [PACIENTE_NOMBRE],</p>
+            <p>¡Te informamos que has sido agendado/a para un turno médico!</p>
+            <p>Detalles del turno:</p>
+            <ul>
+                <li>Fecha: [TURNO_FECHA]</li>
+                <li>Médico: Dr. [MEDICO_NOMBRE]</li>
+                <li>Estudio: [ESTUDIO_NOMBRE]</li>
+                <li>Instituto: [INSTITUTO_NOMBRE]</li>
+                <li>Dirección: [INSTITUTO_DIRECCION]</li>
+            </ul>
+            <p>Te esperamos puntualmente en la fecha y hora indicadas. Si tienes alguna pregunta o necesitas más información, contacta con la persona que agendó el turno.</p>
+            <p>¡Gracias por confiar en nosotros! ¡Esperamos que tengas una excelente experiencia durante tu consulta!</p>
+            <p>Saludos cordiales,<br>Equipo de TurnosApp</p>
+        </div>
+        <div class="footer">
+            <p>Este correo electrónico fue generado automáticamente.<br>Por favor, no respondas a este correo.</p>
+        </div>
+    </div>
+</body>
+</html>
