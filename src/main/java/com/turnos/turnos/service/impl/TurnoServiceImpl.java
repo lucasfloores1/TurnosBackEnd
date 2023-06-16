@@ -26,8 +26,6 @@ public class TurnoServiceImpl implements ITurnoService {
     @Autowired
     public UserRepository userRepository;
     
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(EmailServiceImpl.class);
-    
     @Override
     public List<Turno> getTurnos() {
         
@@ -49,12 +47,10 @@ public class TurnoServiceImpl implements ITurnoService {
     public void deleteTurno(Long id) {
         
         Turno turno = turnoRepository.findById(id).orElse(null);
-        if(turno != null){
-            logger.info("no dio nulo");   
+        if(turno != null){  
             turnoRepository.delete(turno);
-        }else {
-            logger.info("dio nulo");
         }
+        
     }
 
     @Override

@@ -31,7 +31,7 @@ public interface TurnoRepository extends JpaRepository<Turno, Long>{
     
     List<Turno> findByUser( User user );
     
-    @Query("SELECT t FROM Turno t WHERE DATE(t.fecha) = CURRENT_DATE() + 4")
+    @Query("SELECT t FROM Turno t WHERE DATE(t.fecha) = CURRENT_DATE() + 1")
     List<Turno> getTurnosForTomorrow();
     
 }
