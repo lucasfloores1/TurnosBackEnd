@@ -11,7 +11,7 @@ public interface IUserService {
     
     public User getUserById(Long id);
     
-    public ResponseEntity<User> createUser(User user);
+    public User createUser(User user);
     
     public void deleteUser(Long id);
     

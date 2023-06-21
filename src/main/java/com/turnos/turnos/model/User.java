@@ -32,6 +32,7 @@ public class User implements UserDetails{
     private String tel;
     
     @Column(name = "verification")
+    @JsonIgnore
     private String verification;
     
     @Column(name = "enable")
@@ -69,9 +70,13 @@ public class User implements UserDetails{
     public User() {
     }
 
-    public User(String email ,Long id, String username, String password, List<Paciente> pacientes, List<Medico> medicos, List<Instituto> institutos, List<ObraSocial> obraSociales, List<Estudio> estudios) {
-        this.email = email;
+    public User(Long id, String nombre, String tel, String verification, boolean enable, String email, String username, String password, List<Paciente> pacientes, List<Medico> medicos, List<Instituto> institutos, List<ObraSocial> obraSociales, List<Estudio> estudios) {
         this.id = id;
+        this.nombre = nombre;
+        this.tel = tel;
+        this.verification = verification;
+        this.enable = enable;
+        this.email = email;
         this.username = username;
         this.password = password;
         this.pacientes = pacientes;
@@ -80,6 +85,8 @@ public class User implements UserDetails{
         this.obraSociales = obraSociales;
         this.estudios = estudios;
     }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

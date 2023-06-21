@@ -79,12 +79,12 @@ public class AuthenticationController {
         response.setUser(user);
 
         try {
-            if (jwtUtils.validateToken(token, user)) {
+            if (jwtUtils.validateToken(token, user) && user.isEnable()) {
                 response.setValid(true);
                 return ResponseEntity.ok(response);
             } else {
                 response.setValid(false);
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired or Account not verified");
             }
         } catch (ExpiredJwtException ex) {
             response.setValid(false);

@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class NuevoUserDTO {
     
-    private Long id;
     private String nombre;
     private String tel;
     private String email;
@@ -17,8 +16,7 @@ public class NuevoUserDTO {
     public NuevoUserDTO() {
     }
 
-    public NuevoUserDTO(Long id, String nombre, String tel, String email, String username, String password) {
-        this.id = id;
+    public NuevoUserDTO(String nombre, String tel, String email, String username, String password) {
         this.nombre = nombre;
         this.tel = tel;
         this.email = email;
