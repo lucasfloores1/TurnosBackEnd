@@ -11,4 +11,5 @@ public interface ObraSocialRepository extends JpaRepository<ObraSocial, Long> {
     
     List<ObraSocial> findByUser( User user );
     
+    ObraSocial findByNombreAndUser( String nombre, User user );
 }

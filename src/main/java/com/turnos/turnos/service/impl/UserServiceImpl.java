@@ -30,11 +30,9 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ResponseEntity<User> createUser(User user) {
+    public User createUser(User user) {
         
-        User createdUser = userRepository.save(user);
-        
-        return ResponseEntity.ok(createdUser);
+        return userRepository.save(user);
         
     }
     

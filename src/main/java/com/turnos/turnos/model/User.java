@@ -25,6 +25,19 @@ public class User implements UserDetails{
     @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id;
     
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
+    
+    @Column(name = "tel", nullable = false)
+    private String tel;
+    
+    @Column(name = "verification")
+    @JsonIgnore
+    private String verification;
+    
+    @Column(name = "enable")
+    private boolean enable;
+    
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     
@@ -57,9 +70,13 @@ public class User implements UserDetails{
     public User() {
     }
 
-    public User(String email ,Long id, String username, String password, List<Paciente> pacientes, List<Medico> medicos, List<Instituto> institutos, List<ObraSocial> obraSociales, List<Estudio> estudios) {
-        this.email = email;
+    public User(Long id, String nombre, String tel, String verification, boolean enable, String email, String username, String password, List<Paciente> pacientes, List<Medico> medicos, List<Instituto> institutos, List<ObraSocial> obraSociales, List<Estudio> estudios) {
         this.id = id;
+        this.nombre = nombre;
+        this.tel = tel;
+        this.verification = verification;
+        this.enable = enable;
+        this.email = email;
         this.username = username;
         this.password = password;
         this.pacientes = pacientes;
@@ -68,6 +85,8 @@ public class User implements UserDetails{
         this.obraSociales = obraSociales;
         this.estudios = estudios;
     }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -91,7 +110,7 @@ public class User implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enable;
     }
     
     

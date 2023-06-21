@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 public class NuevoMedicoDTO {
     
+    private Long id;
     private Long userId;     
     private String nombre;
     private String mail;
@@ -22,7 +23,8 @@ public class NuevoMedicoDTO {
     public NuevoMedicoDTO() {
     }
 
-    public NuevoMedicoDTO( Long userId, String nombre, String mail, Long dni, String direccion, String tel, int matricula, Long idInstituto, Set<Horario> horarios) {
+    public NuevoMedicoDTO(Long id, Long userId, String nombre, String mail, Long dni, String direccion, String tel, int matricula, Long idInstituto, Set<Horario> horarios) {
+        this.id = id;
         this.userId = userId;
         this.nombre = nombre;
         this.mail = mail;
@@ -33,10 +35,5 @@ public class NuevoMedicoDTO {
         this.idInstituto = idInstituto;
         this.horarios = horarios;
     }
-
-
-
-
-    
     
 }

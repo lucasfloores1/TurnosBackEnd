@@ -1,7 +1,9 @@
 package com.turnos.turnos.service;
 
+import com.turnos.turnos.DTO.PlanDTO;
 import com.turnos.turnos.model.Plan;
 import java.util.List;
+import java.util.Set;
 
 
 public interface IPlanService {
@@ -10,9 +12,9 @@ public interface IPlanService {
     
     public List<Plan> getPlanes();
     
-    public List<Plan> getPlanesByObraSocial(Long idObraSocial);
+    public Set<PlanDTO> getPlanesByObraSocial(Long idObraSocial);
     
-    public void createPlan (Plan plan);
+    public Plan createPlan(Plan plan);
     
     public void deletePlan (Long id);
     

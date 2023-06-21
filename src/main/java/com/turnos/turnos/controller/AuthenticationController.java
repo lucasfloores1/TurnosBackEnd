@@ -1,13 +1,16 @@
 package com.turnos.turnos.controller;
 
+import com.turnos.turnos.DTO.AuthLoginDTO;
 import com.turnos.turnos.model.User;
 import com.turnos.turnos.security.JwtRequest;
 import com.turnos.turnos.security.JwtResponse;
 import com.turnos.turnos.security.JwtUtils;
 import com.turnos.turnos.service.impl.UserDetailsServiceImpl;
 import com.turnos.turnos.service.impl.UserServiceImpl;
+import io.jsonwebtoken.ExpiredJwtException;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -66,16 +70,25 @@ public class AuthenticationController {
         return (User) this.userDetailsService.loadUserByUsername(principal.getName());
     }
     
-    @GetMapping ( "/user/validate/{token}/{id}" )
-    public ResponseEntity<?> validateUser(@PathVariable String token ,@PathVariable Long id ){
-
+    @GetMapping("/user/validate/{token}/{id}")
+    @ResponseBody
+    public ResponseEntity<?> validateUser(@PathVariable String token, @PathVariable Long id) {
         User user = userService.getUserById(id);
-        
-        if(jwtUtils.validateToken(token, user)){
-            Boolean response = true;
-            return ResponseEntity.ok(response);
+        AuthLoginDTO response = new AuthLoginDTO();
+        response.setToken(token);
+        response.setUser(user);
+
+        try {
+            if (jwtUtils.validateToken(token, user) && user.isEnable()) {
+                response.setValid(true);
+                return ResponseEntity.ok(response);
+            } else {
+                response.setValid(false);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired or Account not verified");
+            }
+        } catch (ExpiredJwtException ex) {
+            response.setValid(false);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
         }
-        Boolean response = false;
-        return ResponseEntity.ok(response);
     }
 }

@@ -1,6 +1,7 @@
 package com.turnos.turnos.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -34,7 +37,8 @@ public class Horario {
     @Column( name = "intervalo", nullable = false )
     private int intervalo;
     
-    @ManyToOne ( fetch = FetchType.EAGER )
+    @ManyToOne ( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Medico_Instituto medicoInstituto;
 
     public Horario() {

@@ -1,5 +1,6 @@
 package com.turnos.turnos.service;
 
+import com.turnos.turnos.DTO.GetMedicoDTO;
 import com.turnos.turnos.model.Medico;
 import com.turnos.turnos.model.Medico_Instituto;
 import java.util.List;
@@ -20,5 +21,11 @@ public interface IMedicoService {
     public Medico addMedico(Medico medico);
     
     public Medico_Instituto addMedico_Instituto(Medico_Instituto medico_instituto);
+    
+    public void updateMedicoAndMedicoInstituto(Medico medico, Medico_Instituto medicoInstituto);
+    
+    public Medico_Instituto getMedicoInstitutoByIds( Long medicoId, Long institutoId );
+    
+    public GetMedicoDTO getMedicoDTOById(Long id);
     
 }

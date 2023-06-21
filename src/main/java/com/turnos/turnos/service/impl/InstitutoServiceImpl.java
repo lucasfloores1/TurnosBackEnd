@@ -49,6 +49,7 @@ public class InstitutoServiceImpl implements IInstitutoService {
         
         instituto.setNombre ( toUpdateInstituto.getNombre() );
         instituto.setDireccion ( toUpdateInstituto.getDireccion() );
+        instituto.setCuit(toUpdateInstituto.getCuit());
         
         Instituto updatedInstituto = institutoRepository.save(instituto);
         
