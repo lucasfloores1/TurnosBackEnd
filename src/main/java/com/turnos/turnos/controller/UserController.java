@@ -1,6 +1,10 @@
 package com.turnos.turnos.controller;
 
+import com.turnos.turnos.model.ObraSocial;
+import com.turnos.turnos.model.Plan;
 import com.turnos.turnos.model.User;
+import com.turnos.turnos.service.impl.ObraSocialServiceImpl;
+import com.turnos.turnos.service.impl.PlanServiceImpl;
 import com.turnos.turnos.service.impl.UserServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,12 @@ public class UserController {
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
+    @Autowired
+    private ObraSocialServiceImpl obraSocialService;
+    
+    @Autowired
+    private PlanServiceImpl planService;
     
     @GetMapping ( "/user/load" )
     @ResponseBody
@@ -54,8 +64,22 @@ public class UserController {
         User createdUser = userService.createUser(user).getBody();
         
         if ( createdUser != null ){
+            //Creo particular
+            ObraSocial obraSocial = new ObraSocial();
+            obraSocial.setNombre("Particular");
+            obraSocial.setDireccion("Calle y número");
+            obraSocial.setUser(createdUser);
+            ObraSocial savedObraSocial = obraSocialService.createObraSocial(obraSocial);
+            //Creo plan
+            Plan plan = new Plan();
+            plan.setNombre("Particular");
+            plan.setObraSocial(savedObraSocial);
+            Plan createdPlan = planService.createPlan(plan);
+            //Añado el plan y guardo
+            savedObraSocial.getPlanes().add(createdPlan);
+            obraSocialService.createObraSocial(savedObraSocial);
             
-        response = ResponseEntity.ok(createdUser);
+            response = ResponseEntity.ok(createdUser);
             
         }else {
             

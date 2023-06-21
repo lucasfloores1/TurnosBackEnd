@@ -1,5 +1,6 @@
 package com.turnos.turnos.service;
 
+import com.turnos.turnos.DTO.NuevoPacienteDTO;
 import com.turnos.turnos.model.Paciente;
 import com.turnos.turnos.model.Paciente_ObraSocial;
 import java.util.List;
@@ -18,5 +19,7 @@ public interface IPacienteService {
     public void deletePaciente(Long id);
     
     public ResponseEntity<Paciente> updatePaciente( Long id, Paciente paciente );
+    
+    public Paciente createOrUpdatePaciente(NuevoPacienteDTO pacienteDTO);
     
 }

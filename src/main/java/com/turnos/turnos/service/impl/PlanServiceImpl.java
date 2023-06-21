@@ -1,10 +1,13 @@
 package com.turnos.turnos.service.impl;
 
+import com.turnos.turnos.DTO.PlanDTO;
 import com.turnos.turnos.model.ObraSocial;
 import com.turnos.turnos.model.Plan;
 import com.turnos.turnos.repository.PlanRepository;
 import com.turnos.turnos.service.IPlanService;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,15 +32,23 @@ public class PlanServiceImpl implements IPlanService{
     }
 
     @Override
-    public List<Plan> getPlanesByObraSocial(Long idObraSocial) {
+    public Set<PlanDTO> getPlanesByObraSocial(Long idObraSocial) {
         ObraSocial obraSocial = obraSocialService.getObraSocialById(idObraSocial);
-        return planRepository.findByObraSocial(obraSocial);
+        List<Plan> planes = planRepository.findByObraSocial(obraSocial);
+        Set<PlanDTO> response = new HashSet<>();
+        for ( Plan plan : planes ){
+            PlanDTO planDTO = new PlanDTO();
+            planDTO.setId(plan.getId());
+            planDTO.setNombre(plan.getNombre());
+            response.add(planDTO);
+        }
+        return response;
     }
 
     @Override
-    public void createPlan(Plan plan) {
+    public Plan createPlan(Plan plan) {
         
-        planRepository.save(plan);
+        return planRepository.save(plan);
         
     }
 

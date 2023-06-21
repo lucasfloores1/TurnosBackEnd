@@ -25,28 +25,10 @@ public class ObraSocialServiceImpl implements IObraSocialService {
         return obraSocialRepository.findAll();
         
     }
-
-    /*@Override
-    public ObraSocial createObraSocial(ObraSocial obraSocial) {
-        
-        ObraSocial createdObraSocial = obraSocialRepository.findById(obraSocial.getId()).orElse(null);
-        
-        createdObraSocial.setNombre(obraSocial.getNombre());
-        createdObraSocial.setDireccion(obraSocial.getDireccion());
-        createdObraSocial.setPlanes(obraSocial.getPlanes());
-        
-        return obraSocialRepository.save(createdObraSocial);
-        
-    }*/
     
     @Override
     public ObraSocial createObraSocial(ObraSocial obraSocial) {
-        ObraSocial createdObraSocial = new ObraSocial();
-        createdObraSocial.setUser(obraSocial.getUser());
-        createdObraSocial.setNombre(obraSocial.getNombre());
-        createdObraSocial.setDireccion(obraSocial.getDireccion());
-        createdObraSocial.setPlanes(obraSocial.getPlanes());
-        return obraSocialRepository.save(createdObraSocial);
+        return obraSocialRepository.save(obraSocial);
     }
     
 

@@ -1,5 +1,6 @@
 package com.turnos.turnos.DTO;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,14 +15,12 @@ public class NuevoPacienteDTO {
     private Long dni;
     private String tel;
     private String direccion;
-    private Long idObraSocial;
-    private Long idPlan;
-    private String afiliado;
+    private List<PacienteOSDTO> obrasSociales;
 
     public NuevoPacienteDTO() {
     }
 
-    public NuevoPacienteDTO( Long userId, Long id, String nombre, String mail, Long dni, String direccion, Long idObraSocial, Long idPlan, String afiliado, String tel) {
+    public NuevoPacienteDTO(Long userId, Long id, String nombre, String mail, Long dni, String tel, String direccion, List<PacienteOSDTO> obrasSociales) {
         this.userId = userId;
         this.id = id;
         this.nombre = nombre;
@@ -29,11 +28,7 @@ public class NuevoPacienteDTO {
         this.dni = dni;
         this.tel = tel;
         this.direccion = direccion;
-        this.idObraSocial = idObraSocial;
-        this.idPlan = idPlan;
-        this.afiliado = afiliado;
-    }
-    
-    
+        this.obrasSociales = obrasSociales;
+    }    
     
 }

@@ -11,8 +11,10 @@ public interface IHorarioService {
     
     public void deleteHorario(Long id);
     
-    public void createHorario(Horario horario);
+    public Horario createHorario(Horario horario);
     
     public List<Horario> getHorariosByMedicoInstituto(Long id);
+    
+    public Horario updateOrCreateHorario( Horario horario );
     
 }

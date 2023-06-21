@@ -25,6 +25,18 @@ public class User implements UserDetails{
     @GeneratedValue ( strategy = GenerationType.IDENTITY )
     private Long id;
     
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
+    
+    @Column(name = "tel", nullable = false)
+    private String tel;
+    
+    @Column(name = "verification")
+    private String verification;
+    
+    @Column(name = "enable")
+    private boolean enable;
+    
     @Column(name = "email", nullable = false, unique = true)
     private String email;
     
@@ -91,7 +103,7 @@ public class User implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enable;
     }
     
     

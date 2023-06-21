@@ -1,4 +1,3 @@
-
 package com.turnos.turnos.controller;
 
 import com.turnos.turnos.DTO.GetPacienteDTO;
@@ -19,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -45,6 +46,8 @@ public class PacienteController {
     private Paciente_ObraSocialRepository paciente_ObrasocialRepository;
     @Autowired
     private UserServiceImpl userService;
+    
+    private static final Logger logger = LoggerFactory.getLogger(PacienteController.class);
     
     @GetMapping( "/paciente/load" )
     @ResponseBody
@@ -108,7 +111,7 @@ public class PacienteController {
         return ResponseEntity.ok(pacienteDTO);
     };
     
-    @PostMapping( "/paciente/create" )
+    /*@PostMapping( "/paciente/create" )
     @ResponseBody
     public ResponseEntity<?> createPaciente( @RequestBody NuevoPacienteDTO pacientedto ) {
         
@@ -142,7 +145,7 @@ public class PacienteController {
         pacienteService.createPaciente(createdPaciente, paciente_ObraSocial);
 
         return ResponseEntity.ok( createdPaciente );
-    }  
+    }*/  
     
     @DeleteMapping( "/paciente/delete/{id}" )
     @Transactional
@@ -159,6 +162,11 @@ public class PacienteController {
         
         return pacienteService.updatePaciente(id, toUpdatePaciente);
     
-    };        
+    };
     
+    @PostMapping ( "/paciente/create" )
+    public ResponseEntity<Paciente> createOrUpdatePaciente( @RequestBody NuevoPacienteDTO pacienteDTO ){
+        Paciente paciente = pacienteService.createOrUpdatePaciente(pacienteDTO);
+        return ResponseEntity.ok(paciente);
+    }
 }

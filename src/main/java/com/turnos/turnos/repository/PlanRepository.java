@@ -2,7 +2,6 @@ package com.turnos.turnos.repository;
 
 import com.turnos.turnos.model.ObraSocial;
 import com.turnos.turnos.model.Plan;
-import com.turnos.turnos.model.User;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,5 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface PlanRepository extends JpaRepository< Plan, Long > {
  
     public List<Plan> findByObraSocial( ObraSocial obraSocial );
+    
+    public Plan findByNombreAndObraSocial ( String nombre, ObraSocial obraSocial );
     
 }

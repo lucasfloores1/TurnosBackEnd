@@ -6,7 +6,6 @@ import com.turnos.turnos.service.impl.EstudioServiceImpl;
 import com.turnos.turnos.service.impl.UserServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,24 +41,29 @@ public class EstudioController {
     
     @GetMapping( "/estudio/load/{id}" )
     @ResponseBody
-    public ResponseEntity<Estudio> loadEstudio(@PathVariable Long id){
+    public ResponseEntity<Estudio> getEstudioById(@PathVariable Long id){
         Estudio estudio = estudioService.getEstudioById(id);
         return ResponseEntity.ok(estudio);
     }
     
     @PostMapping( "/estudio/create" )
     @ResponseBody
-    public ResponseEntity<Estudio> createEstudio( @RequestBody NuevoEstudioDTO estudioDTO ) {
-        ResponseEntity<Estudio> response;
+    public ResponseEntity<Estudio> createOrUpdateEstudio( @RequestBody NuevoEstudioDTO estudioDTO ) {
+        Estudio estudio ;
         
-        Estudio createdEstudio = new Estudio();
-        createdEstudio.setUser(userService.getUserById(estudioDTO.getUserId()));
-        createdEstudio.setNombre(estudioDTO.getNombre());
-        createdEstudio.setNomenclador(estudioDTO.getNomenclador());     
+        if (estudioDTO.getId() == 0){
+            estudio = new Estudio();
+            estudio.setUser(userService.getUserById(estudioDTO.getUserId()));
+            estudio.setNombre(estudioDTO.getNombre());
+            estudio.setNomenclador(estudioDTO.getNomenclador());
+            estudioService.createEstudio(estudio);
+        }else{
+            estudio = estudioService.getEstudioById(estudioDTO.getId());
+            estudio.setNombre(estudioDTO.getNombre());
+            estudio.setNomenclador(estudioDTO.getNomenclador());
+        }
             
-        response = estudioService.createEstudio(createdEstudio);
-            
-        return response;
+        return ResponseEntity.ok(estudio);
     }  
     
     @DeleteMapping( "/estudio/delete/{id}" )
