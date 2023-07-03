@@ -54,6 +54,7 @@ public class HorarioServiceImpl implements IHorarioService{
         if(nuevoHorario == null){
             return createHorario(horario);
         } else {
+            nuevoHorario.setMedicoInstituto(horario.getMedicoInstituto());
             nuevoHorario.setDia(horario.getDia());
             nuevoHorario.setInicio(horario.getInicio());
             nuevoHorario.setFin(horario.getFin());

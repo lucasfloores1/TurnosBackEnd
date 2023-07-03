@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin( origins = "http://localhost:4200/" )
+//@CrossOrigin( origins = "https://turnos.up.railway.app/" )
 public class MedicoController {
     
     @Autowired
@@ -64,64 +65,6 @@ public class MedicoController {
         medicoService.deleteMedico(id);
     }
       
-    /*@GetMapping ("medico/load/{id}")
-    @ResponseBody
-    public ResponseEntity<GetMedicoDTO> getMedicoById(@PathVariable Long id){
-        
-        //Obtengo los datos por id
-        Medico medico = medicoService.getMedicoById(id);
-        
-        //Creo el dto
-        GetMedicoDTO medicodto = new GetMedicoDTO();
-        medicodto.setId(medico.getId());
-        medicodto.setNombre(medico.getNombre());
-        medicodto.setDni(medico.getDni());
-        medicodto.setMail(medico.getMail());
-        medicodto.setDireccion(medico.getDireccion());
-        medicodto.setTel(medico.getTel());
-        medicodto.setMatricula(medico.getMatricula());
-        
-        //Obetener la lista de institutos del medico
-        List<InstitutoDTO> institutosDTO = new ArrayList<>();
-        
-        for ( Medico_Instituto medicoInstituto : medico.getMedicoInstituto() ){
-            
-            Instituto instituto = medicoInstituto.getInstituto();
-            
-            //Crear objeto institutoDTO y mapear los datos del instituto
-            InstitutoDTO institutoDTO = new InstitutoDTO();
-            institutoDTO.setId(instituto.getId());
-            institutoDTO.setNombre(instituto.getNombre());
-            institutoDTO.setDireccion(instituto.getDireccion());
-            
-            //Obetengo la lista de horarios del instituto
-            List<HorarioDTO> horariosDTO = new ArrayList<>();
-            for ( Horario horario : medicoInstituto.getHorarios() ){
-                
-                //guardamos en List<Horario>
-                HorarioDTO horarioDTO = new HorarioDTO();
-                horarioDTO.setId(horario.getId());
-                horarioDTO.setDia(horario.getDia());
-                horarioDTO.setInicio(horario.getInicio());
-                horarioDTO.setFin(horario.getFin());
-                horarioDTO.setIntervalo(horario.getIntervalo());
-                
-                //agregamos a list<horario>
-                horariosDTO.add(horarioDTO);
-            }
-            //agrego los horarios en institutodto
-            institutoDTO.setHorarios(horariosDTO);
-            
-            //agrego el instituto al listado de institutos de medicodto
-            institutosDTO.add(institutoDTO);
-            
-        }
-        
-        //guardo el listado de institutos en medicodto
-        medicodto.setInstitutos(institutosDTO);
-        
-        return ResponseEntity.ok(medicodto);
-    }*/
     @GetMapping("/medico/load/{id}")
     @ResponseBody
     public ResponseEntity<GetMedicoDTO> getMedicoById(@PathVariable Long id) {
@@ -138,6 +81,7 @@ public class MedicoController {
 
             if (medicoExistente == null) {
                 // No existe un Medico con el ID proporcionado, crear uno nuevo
+                logger.info("no se encontro un medico, se crea uno");
 
                 // Establecer el Instituto
                 Instituto instituto = institutoService.getInstitutoById(medicodto.getIdInstituto());
@@ -154,6 +98,7 @@ public class MedicoController {
 
                 // Guardar el Medico nuevo
                 Medico savedMedico = medicoService.addMedico(nuevoMedico);
+                logger.info("se creo este medico con id "+savedMedico.getId());
 
                 // Crear una nueva instancia de Medico_Instituto
                 Medico_Instituto nuevaInstancia = new Medico_Instituto();
@@ -162,6 +107,7 @@ public class MedicoController {
 
                 // Guardar la nueva instancia de Medico_Instituto
                 Medico_Instituto savedInstancia = medicoService.addMedico_Instituto(nuevaInstancia);
+                logger.info("se creo esta instancia con id "+savedInstancia.getId());
 
                 // Establecer la relación en el objeto Medico
                 Set<Medico_Instituto> medicoInstitutoSet = new HashSet<>();
@@ -170,10 +116,18 @@ public class MedicoController {
 
                 // Crear los horarios
                 Set<Horario> horariosCreados = new HashSet<>();
-                for (Horario horario : medicodto.getHorarios()) {
+                //Recorro el DTO
+                for (Horario horarioDTO : medicodto.getHorarios()) {
+                    Horario horario = new Horario();
+                    horario.setId(horarioDTO.getId());
+                    horario.setDia(horarioDTO.getDia());
+                    horario.setInicio(horarioDTO.getInicio());
+                    horario.setFin(horarioDTO.getFin());
+                    horario.setIntervalo(horarioDTO.getIntervalo());
                     horario.setMedicoInstituto(savedInstancia);
-                    horarioService.createHorario(horario);
-                    horariosCreados.add(horario);
+                    logger.info("creo horario");
+                    Horario horarioCreado = horarioService.updateOrCreateHorario(horario);
+                    horariosCreados.add(horarioCreado);
                 }
 
                 // Asignar los horarios creados a la instancia de Medico_Instituto
@@ -223,10 +177,18 @@ public class MedicoController {
                     logger.info("se guardo la nueva instancia", savedInstancia);
                     // Crear los horarios
                     Set<Horario> horariosCreados = new HashSet<>();
-                    for (Horario horario : medicodto.getHorarios()) {
+                    //Recorro el DTO
+                    for (Horario horarioDTO : medicodto.getHorarios()) {
+                        Horario horario = new Horario();
+                        horario.setId(horarioDTO.getId());
+                        horario.setDia(horarioDTO.getDia());
+                        horario.setInicio(horarioDTO.getInicio());
+                        horario.setFin(horarioDTO.getFin());
+                        horario.setIntervalo(horarioDTO.getIntervalo());
                         horario.setMedicoInstituto(savedInstancia);
-                        horarioService.createHorario(horario);
-                        horariosCreados.add(horario);
+                        logger.info("creo horario");
+                        Horario horarioCreado = horarioService.updateOrCreateHorario(horario);
+                        horariosCreados.add(horarioCreado);
                     }
                     logger.info("se crearon estos horarios", horariosCreados);
                     // Asignar los horarios creados a la instancia de Medico_Instituto

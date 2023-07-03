@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin( origins = "http://localhost:4200/" )
+//@CrossOrigin( origins = "https://turnos.up.railway.app/" )
 public class Medico_InstitutoController {
     
     @Autowired
