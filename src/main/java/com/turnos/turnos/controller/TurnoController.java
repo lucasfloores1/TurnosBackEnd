@@ -43,7 +43,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
-@CrossOrigin( origins = "http://localhost:4200" )
+//@CrossOrigin( origins = "http://localhost:4200" )
+@CrossOrigin( origins = "https://turnomed.up.railway.app/" )
 public class TurnoController {
     
     @Autowired
